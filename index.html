@@ -266,48 +266,64 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* hero with GIF background */
-    .hero {
-      height: 90vh;
-      position: relative;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-    }
-    .hero-bg video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('background.mp4') center/cover no-repeat;
-      z-index: 0;
-    }
-    .hero-overlay {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(255,255,255,0.7);
-      z-index: 1;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 600px;
-      margin-left: 10%;
-      color: #111111;
-    }
-    .hero h1 {
-      font-size: clamp(4rem, 10vw, 7rem);
-      line-height: 0.9;
-      margin-bottom: 1.5rem;
-    }
-    .hero p {
-      font-size: 1.1rem;
-      margin: 1.5rem 0 2.5rem;
-      color: #333;
-      max-width: 450px;
-    }
+    /* hero with VIDEO background */
+.hero {
+  height: 90vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
 
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* important */
+  z-index: 0;
+}
+
+.hero-bg video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* makes it fully fill like background */
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  background: rgba(255,255,255,0.7);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  margin-left: 10%;
+  color: #111111;
+}
+
+.hero h1 {
+  font-size: clamp(4rem, 10vw, 7rem);
+  line-height: 0.9;
+  margin-bottom: 1.5rem;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  margin: 1.5rem 0 2.5rem;
+  color: #333;
+  max-width: 450px;
+}
     /* concerns grid */
     .concern-grid {
       display: grid;
