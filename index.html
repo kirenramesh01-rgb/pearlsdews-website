@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pearls & Dews | doctor‑formulated luxury</title>
+  <!-- favicon -->
+  <link rel="icon" type="image/png" href="fav.png">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ---------- PALETTE: 70% white, 20% black, 10% deep charcoal ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #FFFFFF;
+      color: #111111;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: #111111;
+    }
+    h1 {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 1.1;
+    }
+    h2 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+    h3 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+    .section-subhead {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #231F20;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+    @media (max-width: 768px) {
+      .container { padding: 0 1.5rem; }
+    }
+    .section {
+      padding: 2rem 0;
+    }
+    .section-sm {
+      padding: 2rem 0;
+    }
+
+    /* buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.8rem;
+      text-decoration: none;
+      font-weight: 400;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border: 1px solid #111111;
+      font-size: 0.85rem;
+      background: transparent;
+      color: #111111;
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase;
+    }
+    .btn-primary {
+      background: #111111;
+      color: #FFFFFF;
+      border-color: #111111;
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: #111111;
+    }
+    .btn-accent {
+      background: #231F20;
+      border-color: #231F20;
+      color: #FFFFFF;
+    }
+    .btn-accent:hover {
+      background: transparent;
+      color: #111111;
+      border-color: #111111;
+    }
+
+    /* top bar */
+    .top-bar {
+      background: #111111;
+      color: #FFFFFF;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+
+    /* navigation with dropdown */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      padding: 0.3rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      filter: grayscale(100%) contrast(1.2);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links > li {
+      list-style: none;
+      position: relative;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #111111;
+      font-weight: 400;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      display: block;
+    }
+    .nav-links a:hover {
+      color: #674d34;
+    }
+    /* dropdown */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #FFFFFF;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+      border: 1px solid #eee;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s;
+      z-index: 10;
+      padding: 0.5rem 0;
+    }
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+    }
+    .dropdown-menu a {
+      padding: 0.7rem 1.5rem;
+      text-transform: none;
+      font-size: 0.85rem;
+    }
+    .menu-icon {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 200;
+    }
+    /* mobile menu overlay */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 320px;
+        height: 100vh;
+        background: #FFFFFF;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 2rem;
+        gap: 1.5rem;
+        transition: right 0.4s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        z-index: 150;
+        display: flex;
+      }
+      .nav-links.show {
+        right: 0;
+      }
+      .nav-links > li {
+        width: 100%;
+      }
+      .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        border: none;
+        opacity: 1;
+        visibility: visible;
+        padding-left: 1rem;
+        display: none;
+        margin-top: 0.5rem;
+      }
+      .dropdown.active .dropdown-menu {
+        display: block;
+      }
+      .dropdown .dropdown-toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+      .menu-icon {
+        display: block;
+      }
+    }
+
+    /* thin wording slideshow banners */
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: #f5f5f5;
+      padding: 0.8rem 0;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+    }
+    .ticker {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+      animation: ticker 30s linear infinite;
+    }
+    .ticker-item {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #231F20;
+      font-weight: 400;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* hero with GIF background */
+    .hero {
+      height: 90vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('background.gif') center/cover no-repeat;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255,255,255,0.7);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+      margin-left: 10%;
+      color: #111111;
+    }
+    .hero h1 {
+      font-size: clamp(4rem, 10vw, 7rem);
+      line-height: 0.9;
+      margin-bottom: 1.5rem;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 2.5rem;
+      color: #333;
+      max-width: 450px;
+    }
+
+    /* concerns grid */
+    .concern-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .concern-card {
+      background: #f5f5f5;
+      padding: 2rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: 0.2s;
+    }
+    .concern-card.active {
+      border-color: #231F20;
+      background: #fff;
+    }
+    .concern-card i {
+      font-size: 2rem;
+      color: #231F20;
+      margin-bottom: 0.5rem;
+    }
+    .concern-card span {
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+    }
+
+    /* product carousel */
+    .carousel-container {
+      position: relative;
+    }
+    .carousel-wrapper {
+      overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      gap: 2rem;
+      transition: transform 0.4s ease;
+    }
+    .carousel-item {
+      flex: 0 0 280px;
+      background: #fff;
+      border: 1px solid #ffffff;
+      padding: 1.5rem;
+    }
+    .carousel-img {
+      background: #ffffff;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      filter: grayscale(100%);
+    }
+    .carousel-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+    }
+    .carousel-price {
+      font-size: 1.2rem;
+      color: #231F20;
+      margin: 0.5rem 0;
+    }
+    .carousel-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-carousel {
+      flex: 1;
+      padding: 0.3rem;
+      text-align: center;
+      text-decoration: none;
+      border: 1px solid #111;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+    .btn-carousel-wa {
+      background: #111;
+      color: #fff;
+    }
+    .btn-carousel-shopee {
+      background: transparent;
+      color: #111;
+    }
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .carousel-nav button {
+      width: 48px;
+      height: 48px;
+      border: 1px solid #111;
+      background: #fff;
+      cursor: pointer;
+    }
+    .carousel-img {
+  overflow: hidden; /* important so zoom stays inside box */
+}
+
+.carousel-img img {
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.carousel-img:hover img {
+  transform: scale(1.5); /* zoom amount */
+}
+
+    /* featured product */
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      background: #fafafa;
+      padding: 3rem;
+      align-items: center;
+    }
+    .featured-img {
+      background: #fafafa;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* testimonials */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+    .testimonial-card {
+      background: #fafafa;
+      padding: 2rem;
+    }
+    .stars {
+      color: #231F20;
+      margin: 1rem 0;
+    }
+
+    /* newsletter */
+    .newsletter {
+      background: #f5f5f5;
+      padding: 4rem;
+      text-align: center;
+    }
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 2rem auto 0;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-right: none;
+    }
+    .newsletter-form button {
+      padding: 1rem 2rem;
+      background: #111;
+      color: #fff;
+      border: 1px solid #111;
+      cursor: pointer;
+    }
+
+    /* footer */
+    footer {
+      background: #111111;
+      color: #f5f5f5;
+      padding: 4rem 3rem 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 3rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .footer-logo img {
+      height: 44px;
+      filter: grayscale(100%) brightness(10);
+    }
+    .footer-links a {
+      display: block;
+      color: #ccc;
+      text-decoration: none;
+      margin: 0.5rem 0;
+    }
+    .footer-links a:hover {
+      color: #fff;
+    }
+    .social-links {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+    .social-links a {
+      color: #ccc;
+      font-size: 1.4rem;
+      transition: color 0.2s;
+    }
+    .social-links a:hover {
+      color: #2e2c2c;
+    }
+    .copyright {
+      text-align: center;
+      margin-top: 3rem;
+      color: #888;
+      font-size: 0.8rem;
+    }
+
+    /* floating whatsapp */
+    .floating-wa {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #111;
+      color: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 99;
+      transition: 0.2s;
+      text-decoration: none;
+    }
+    .floating-wa:hover {
+      background: #231F20;
+    }
+
+    /* modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+    }
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-content {
+      background: #fff;
+      max-width: 440px;
+      width: 90%;
+      padding: 2rem;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+    .promo-placeholder {
+      background: #f5f5f5;
+      height: 140px;
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      .featured-card { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- top bar -->
+  <div class="top-bar">
+    Complimentary shipping on orders RM500+ | Join Pearls & Dews Rewards
+  </div>
+
+  <!-- floating whatsapp -->
+  <a href="https://wa.me/601127827176?text=Hello%2C%20I'm%20interested%20in%20Pearls%20%26%20Dews" class="floating-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+ <!-- modal -->
+<div class="modal-overlay" id="promoModal">
+  <div class="modal-content">
+    <span class="modal-close" id="closeModal">&times;</span>
+    <h3>Special offer</h3>
+    <p class="section-subhead">Grab Now!</p>
+    <div class="promo-placeholder">
+      <img src="promo.jpg" alt="October promo" style="width:100%; height:100%; object-fit:cover;">
+    </div>
+    <p>Use code <strong>PEARLOCT</strong> on WhatsApp or Shopee.</p>
+    <a href="https://wa.me/601127827176?text=Hello%2C%20I'm%20interested%20in%20the%20October%20promo" class="btn btn-accent" style="margin-top:1rem; width:100%;">Claim now</a>
+  </div>
+</div>
+
+  <!-- navigation -->
+  <nav>
+    <div class="nav-logo">
+      <img src="logo.png" alt="Pearls & Dews">
+    </div>
+    <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li class="dropdown" id="dropdown">
+        <a href="#" class="dropdown-toggle" id="dropdownToggle">Discover</i></a>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="#about">About</a>
+          <a href="#careers">Careers</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </li>
+      <li><a href="#concerns">Concerns</a></li>
+      <li><a href="#products">Products</a></li>
+    </ul>
+  </nav>
+
+  <!-- thin wording slideshow banners -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ticker-item">doctor‑formulated</span>
+      <span class="ticker-item">science‑backed</span>
+      <span class="ticker-item">minimalist skincare</span>
+      <span class="ticker-item">skin barrier focused</span>
+      <span class="ticker-item">clinical elegance</span>
+      <span class="ticker-item">doctor‑formulated</span>
+      <span class="ticker-item">science‑backed</span>
+      <span class="ticker-item">minimalist skincare</span>
+      <span class="ticker-item">skin barrier focused</span>
+      <span class="ticker-item">clinical elegance</span>
+    </div>
+  </div>
+
+  <!-- hero with GIF background -->
+  <section id="home" class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="section-subhead">doctor‑formulated</span>
+      <h1>Pearls & Dews</h1>
+      <p>Skincare for healthy, radiant skin — minimal, clinical, luxurious. Dermatologist-developed formulations that respect your skin's barrier.</p>
+      <a href="#products" class="btn btn-primary">Explore collection</a>
+    </div>
+  </section>
+
+  <!-- thin wording banners -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ticker-item">clean ingredients</span>
+      <span class="ticker-item">no fillers</span>
+      <span class="ticker-item">dermatologist tested</span>
+      <span class="ticker-item">visible results</span>
+      <span class="ticker-item">skin health first</span>
+      <span class="ticker-item">clean ingredients</span>
+      <span class="ticker-item">no fillers</span>
+      <span class="ticker-item">dermatologist tested</span>
+      <span class="ticker-item">visible results</span>
+      <span class="ticker-item">skin health first</span>
+    </div>
+  </div>
+
+  
+
+  <!-- product carousel -->
+  <section id="products" class="section-sm">
+    <div class="container">
+      <h2>Recommended for you</h2>
+      <div class="carousel-container">
+        <div class="carousel-wrapper">
+          <div class="carousel-track" id="carouselTrack"></div>
+        </div>
+        <div class="carousel-nav">
+          <button id="carouselPrev"><i class="fas fa-chevron-left"></i></button>
+          <button id="carouselNext"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- featured product -->
+  <section class="section-sm" style="background: #fafafa;">
+    <div class="container featured-card">
+      <div class="featured-img">
+  <img src="11.jpg" alt="Fade Away" style="max-width:70%; object-fit:contain;">
+</div>
+<div>
+  <span class="section-subhead">editor's pick</span>
+  <h3>Fade Away</h3>
+  <p style="font-size:1.4rem; margin:1rem 0; color:#231F20;">RM 170</p>
+  <p style="margin-bottom:2rem;">
+    Targeted treatment for dark spots, acne marks, and uneven skin tone. 
+    Formulated with active brightening agents to visibly fade pigmentation 
+    while maintaining skin barrier health.
+  </p>
+  <div style="display: flex; gap: 1rem;">
+    <a href="https://wa.me/601127827176?text=Hello%2C%20I%20would%20like%20to%20purchase%20Fade%20Away%20from%20Pearls%20%26%20Dews." target="_blank" class="btn btn-accent">WhatsApp</a>
+    <a href="https://shopee.com/search?keyword=Pearls%20%26%20Dews%20Fade%20Away" target="_blank" class="btn">Shopee</a>
+  </div>
+</div>
+    </div>
+  </section>
+
+  <!-- about -->
+  <section id="about" class="section">
+    <div class="container" style="max-width: 900px;">
+      <h2>About Pearls & Dews</h2>
+      <p style="font-size:1.1rem; margin-bottom:1.5rem;">Pearls & Dews was born from a simple insight: effective skincare should be minimalist, clinical, and luxurious. Formulated by a board‑certified dermatologist, every product respects the skin barrier while delivering visible results.</p>
+      <p style="font-size:1.1rem;">We believe in skin health first — science‑backed formulations, free from clutter. Only ingredients that truly benefit the skin, in elegant textures that turn routine into ritual.</p>
+    </div>
+  </section>
+
+  <!-- testimonials -->
+  <section id="testimonials" class="section-sm" style="background: #fafafa;">
+    <div class="container">
+      <h2>Real stories</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <p>“After 4 weeks, my complexion is even and calm. The Eye Perfecting Serum is magic.”</p>
+          <div class="stars">★★★★★</div>
+          <p>— Priya</p>
+        </div>
+        <div class="testimonial-card">
+          <p>“I was skeptical, but the Fade Away reduced my dark spots noticeably.”</p>
+          <div class="stars">★★★★★</div>
+          <p>— Amanda Lee</p>
+        </div>
+        <div class="testimonial-card">
+          <p>“Hydration without stickiness – the Oil Balancing Hydration is my new holy grail.”</p>
+          <div class="stars">★★★★☆</div>
+          <p>— Wafah</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- newsletter -->
+  <section class="newsletter">
+    <div class="container">
+      <h2>Subscribe to our newsletter</h2>
+      <p>Receive expert skincare advice and exclusive offers.</p>
+      <form class="newsletter-form" action="https://formspree.io/f/mjgprkdq" method="POST">
+        <input type="email" name="email" placeholder="Your email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <p style="font-size:0.8rem; margin-top:1rem;">We'll never share your email. Unsubscribe anytime.</p>
+    </div>
+  </section>
+
+  <!-- contact -->
+  <section id="contact" class="section">
+    <div class="container" style="max-width:600px; text-align:center;">
+      <h2>Have questions?</h2>
+      <p style="margin:1.5rem 0;">Our dermatology team is here to help — chat with us directly.</p>
+      <a href="https://wa.me/601127827176?text=Hello%2C%20I%20have%20a%20question%20about%20Pearls%20%26%20Dews." target="_blank" class="btn btn-primary">Chat on WhatsApp</a>
+      <div style="margin:2rem 0;">
+        <p>Email: info@pearlsanddews.com</p>
+        <div class="social-links" style="justify-content:center;">
+          <a href="https://www.instagram.com/pearlsdews/"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@pearls.dews/"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.facebook.com/share/17urKNCoGm/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.linkedin.com/company/pearls-dews/"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- footer -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="logo.png" alt="Pearls & Dews">
+        </div>
+        <p style="margin:1rem 0; color:#ccc;">Doctor‑formulated, science‑backed, minimal skincare.</p>
+      </div>
+      <div class="footer-links">
+        <p style="font-weight:600; color:#fff;">Navigation</p>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#concerns">Concerns</a>
+        <a href="#products">Products</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-links">
+        <p style="font-weight:600; color:#fff;">Contact</p>
+        <a href="https://wa.me/601127827176">WhatsApp</a>
+        <a href="#">info@pearlsanddews.com</a>
+      </div>
+      <div>
+        <p style="font-weight:600; color:#fff;">Follow us</p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/pearlsdews/"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@pearls.dews/"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.facebook.com/share/17urKNCoGm/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.linkedin.com/company/pearls-dews/"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <p style="margin-top:1rem; color:#ccc;">+60 11-2782 7176</p>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2025 Pearls & Dews — luxury dermatological skincare. All rights reserved.
+    </div>
+  </footer>
+
+ <script>
+  // Product data
+  const products = [
+    { name: "Oil Clarifying Cleanser", size: "100ml", price: 90, concerns: ["acne-control", "oiliness"] },
+    { name: "Oil Balancing Hydration", size: "50ml", price: 135, concerns: ["acne-control", "oiliness", "dryness"] },
+    { name: "Fade Away", size: "30ml", price: 170, concerns: ["uneven-tone", "acne-control"] },
+    { name: "Matte BroadSpectrum SunDefence", size: "50ml", price: 130, concerns: ["uneven-tone", "acne-control", "oiliness"] },
+    { name: "Gentle Purifying Cleanser", size: "100ml", price: 95, concerns: ["acne-control", "oiliness"] },
+    { name: "Uplifting Replenishing Cream", size: "30g", price: 120, concerns: ["fine-lines", "dryness"] },
+    { name: "Renewal Night Cream", size: "30g", price: 180, concerns: ["uneven-tone", "fine-lines", "dryness"] },
+    { name: "Wrinkle Relaxer", size: "30ml", price: 185, concerns: ["fine-lines"] },
+    { name: "Rescue Recovery Cream", size: "15g", price: 105, concerns: ["dryness"] },
+    { name: "Eye Perfecting Serum", size: "15g", price: 190, concerns: ["uneven-tone", "fine-lines", "dryness"] }
+  ];
+
+  // Image mapping
+  function getProductImage(name) {
+    const imageMap = {
+      "Wrinkle Relaxer": "1.jpg",
+      "Rescue Recovery Cream": "2.jpg",
+      "Renewal Night Cream": "3.jpg",
+      "Oil Clarifying Cleanser": "4.jpg",
+      "Matte BroadSpectrum SunDefence": "5.jpg",
+      "Gentle Purifying Cleanser": "6.jpg",
+      "Fade Away": "7.jpg",
+      "Eye Perfecting Serum": "8.jpg",
+      "Oil Balancing Hydration": "9.jpg",
+      "Uplifting Replenishing Cream": "10.jpg"
+    };
+    return imageMap[name] || "placeholder.jpg";
+  }
+
+  // Concern mapping
+  const concernMap = {
+    "uneven-tone": ["Fade Away", "Renewal Night Cream", "Eye Perfecting Serum", "Matte BroadSpectrum SunDefence"],
+    "acne-control": ["Oil Clarifying Cleanser", "Gentle Purifying Cleanser", "Oil Balancing Hydration", "Fade Away", "Matte BroadSpectrum SunDefence"],
+    "oiliness": ["Oil Clarifying Cleanser", "Oil Balancing Hydration", "Gentle Purifying Cleanser", "Matte BroadSpectrum SunDefence"],
+    "fine-lines": ["Wrinkle Relaxer", "Renewal Night Cream", "Eye Perfecting Serum", "Uplifting Replenishing Cream"],
+    "dryness": ["Oil Balancing Hydration", "Uplifting Replenishing Cream", "Renewal Night Cream", "Rescue Recovery Cream", "Eye Perfecting Serum"]
+  };
+
+  const track = document.getElementById('carouselTrack');
+  const concernCards = document.querySelectorAll('.concern-card');
+  let currentConcern = 'all';
+
+  function renderProducts(concern) {
+    track.innerHTML = '';
+    
+    let filteredProducts = [];
+    if (concern === 'all') {
+      filteredProducts = products;
+    } else {
+      const productNames = concernMap[concern] || [];
+      filteredProducts = products.filter(p => productNames.includes(p.name));
+    }
+    
+    filteredProducts.forEach(p => {
+      const item = document.createElement('div');
+      item.className = 'carousel-item';
+      item.innerHTML = `
+        <div class="carousel-img">
+          <img src="${getProductImage(p.name)}" alt="${p.name}" style="max-width:100%; max-height:100%; object-fit:contain;">
+        </div>
+        <div class="carousel-name">${p.name}</div>
+        <div class="carousel-meta">${p.size} — RM ${p.price}</div>
+        <div class="carousel-price">RM ${p.price}</div>
+        <div class="carousel-buttons">
+          <a href="https://wa.me/601127827176?text=Hello%2C%20I%20would%20like%20to%20purchase%20${encodeURIComponent(p.name)}%20from%20Pearls%20%26%20Dews." target="_blank" class="btn-carousel btn-carousel-wa"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://shopee.com/search?keyword=Pearls%20%26%20Dews%20${encodeURIComponent(p.name)}" target="_blank" class="btn-carousel btn-carousel-shopee"><i class="fas fa-shopping-bag"></i></a>
+        </div>
+      `;
+      track.appendChild(item);
+    });
+
+    currentIndex = 0;
+    updateCarousel();
+  }
+
+  concernCards.forEach(card => {
+    card.addEventListener('click', () => {
+      concernCards.forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      currentConcern = card.dataset.concern;
+      renderProducts(currentConcern);
+    });
+  });
+
+  // Carousel navigation
+  let currentIndex = 0;
+
+  function updateCarousel() {
+    const itemWidth = 300;
+    const maxIndex = Math.max(0, track.children.length - 1);
+    if (currentIndex > maxIndex) currentIndex = maxIndex;
+    track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+  }
+
+  document.getElementById('carouselPrev').addEventListener('click', () => {
+    if (currentIndex > 0) currentIndex--;
+    updateCarousel();
+  });
+
+  document.getElementById('carouselNext').addEventListener('click', () => {
+    if (currentIndex < track.children.length - 1) currentIndex++;
+    updateCarousel();
+  });
+
+  // Mobile menu
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  const dropdown = document.getElementById('dropdown');
+  const dropdownToggle = document.getElementById('dropdownToggle');
+
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+  });
+
+  dropdownToggle.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      dropdown.classList.toggle('active');
+    }
+  });
+
+  document.querySelectorAll('.nav-links a:not(.dropdown-toggle)').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('show');
+      dropdown.classList.remove('active');
+    });
+  });
+
+  // Modal
+  const modal = document.getElementById('promoModal');
+  const closeBtn = document.getElementById('closeModal');
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      modal.classList.add('show');
+    }, 2000);
+  });
+
+  closeBtn.addEventListener('click', () => {
+    modal.classList.remove('show');
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.remove('show');
+  });
+
+  // Initial render
+  renderProducts('all');
+</script>
+</body>
+</html>
