@@ -1124,6 +1124,17 @@ const menuToggle=document.getElementById('menuToggle');
 const navLinks=document.getElementById('navLinks');
 if(menuToggle){
 menuToggle.addEventListener('click',()=>navLinks.classList.toggle('show'));
+   const dropdown = document.getElementById('dropdown');
+const dropdownToggle = document.getElementById('dropdownToggle');
+
+if (dropdownToggle && dropdown) {
+  dropdownToggle.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      dropdown.classList.toggle('active');
+    }
+  });
+}
 }
 
 /* ===== MODAL ===== */
