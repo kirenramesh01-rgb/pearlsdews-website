@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Concerns | Pearls & Dews</title>
+
+<link rel="icon" type="image/png" href="fav.png">
+
+<!-- SAME FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+
+body{font-family:'Inter';margin:0;color:#111;background:#fff;}
+h1,h2,h3{font-family:'Playfair Display';}
+
+/* NAV */
+nav{display:flex;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid #eee;}
+nav ul{display:flex;gap:2rem;list-style:none;}
+nav a{text-decoration:none;color:#111;font-size:0.85rem;text-transform:uppercase;}
+
+/* GRID */
+.blog-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:2rem;
+padding:3rem;
+}
+.blog-card{
+border:1px solid #eee;
+cursor:pointer;
+transition:0.3s;
+}
+.blog-card:hover{transform:translateY(-6px);}
+.blog-img{height:220px;overflow:hidden;}
+.blog-img img{width:100%;height:100%;object-fit:cover;}
+.blog-content{padding:1.5rem;}
+.tag{font-size:0.7rem;letter-spacing:2px;color:#888;text-transform:uppercase;}
+.product{font-size:0.8rem;margin-top:0.5rem;color:#555;}
+.read{margin-top:1rem;font-size:0.75rem;text-transform:uppercase;}
+
+/* MODAL */
+.modal{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+background:rgba(0,0,0,0.5);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+.modal-content{
+background:#fff;
+width:90%;
+max-width:900px;
+height:90%;
+overflow:auto;
+padding:2rem;
+}
+.close{float:right;font-size:1.5rem;cursor:pointer;}
+
+.cta{text-align:center;margin-top:3rem;}
+.cta a{border:1px solid #111;padding:1rem 2rem;text-decoration:none;}
+.hidden{display:none;}
+
+/* ---------- PALETTE: 70% white, 20% black, 10% deep charcoal ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #FFFFFF;
+      color: #111111;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: #111111;
+    }
+    h1 {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 1.1;
+    }
+    h2 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+    h3 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+    .section-subhead {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #231F20;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+    @media (max-width: 768px) {
+      .container { padding: 0 1.5rem; }
+    }
+    .section {
+      padding: 2rem 0;
+    }
+    .section-sm {
+      padding: 2rem 0;
+    }
+
+    /* buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.8rem;
+      text-decoration: none;
+      font-weight: 400;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border: 1px solid #111111;
+      font-size: 0.85rem;
+      background: transparent;
+      color: #111111;
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase;
+    }
+    .btn-primary {
+      background: #111111;
+      color: #FFFFFF;
+      border-color: #111111;
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: #111111;
+    }
+    .btn-accent {
+      background: #231F20;
+      border-color: #231F20;
+      color: #FFFFFF;
+    }
+    .btn-accent:hover {
+      background: transparent;
+      color: #111111;
+      border-color: #111111;
+    }
+
+    /* top bar */
+    .top-bar {
+      background: #111111;
+      color: #FFFFFF;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+
+    /* navigation with dropdown */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      padding: 0.3rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      filter: grayscale(100%) contrast(1.2);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links > li {
+      list-style: none;
+      position: relative;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #111111;
+      font-weight: 400;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      display: block;
+    }
+    .nav-links a:hover {
+      color: #674d34;
+    }
+    /* dropdown */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #FFFFFF;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+      border: 1px solid #eee;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s;
+      z-index: 10;
+      padding: 0.5rem 0;
+    }
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+    }
+    .dropdown-menu a {
+      padding: 0.7rem 1.5rem;
+      text-transform: none;
+      font-size: 0.85rem;
+    }
+    .menu-icon {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 200;
+    }
+    /* mobile menu overlay */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 320px;
+        height: 100vh;
+        background: #FFFFFF;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 2rem;
+        gap: 1.5rem;
+        transition: right 0.4s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        z-index: 150;
+        display: flex;
+      }
+      .nav-links.show {
+        right: 0;
+      }
+      .nav-links > li {
+        width: 100%;
+      }
+      .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        border: none;
+        opacity: 1;
+        visibility: visible;
+        padding-left: 1rem;
+        display: none;
+        margin-top: 0.5rem;
+      }
+      .dropdown.active .dropdown-menu {
+        display: block;
+      }
+      .dropdown .dropdown-toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+      .menu-icon {
+        display: block;
+      }
+    }
+
+    /* thin wording slideshow banners */
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: #f5f5f5;
+      padding: 0.8rem 0;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+    }
+    .ticker {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+      animation: ticker 30s linear infinite;
+    }
+    .ticker-item {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #231F20;
+      font-weight: 400;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* hero with GIF background */
+    .hero {
+      height: 90vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('background.gif') center/cover no-repeat;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255,255,255,0.7);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+      margin-left: 10%;
+      color: #111111;
+    }
+    .hero h1 {
+      font-size: clamp(4rem, 10vw, 7rem);
+      line-height: 0.9;
+      margin-bottom: 1.5rem;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 2.5rem;
+      color: #333;
+      max-width: 450px;
+    }
+
+    
+
+    /* product carousel */
+    .carousel-container {
+      position: relative;
+    }
+    .carousel-wrapper {
+      overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      gap: 2rem;
+      transition: transform 0.4s ease;
+    }
+    .carousel-item {
+      flex: 0 0 280px;
+      background: #fff;
+      border: 1px solid #ffffff;
+      padding: 1.5rem;
+    }
+    .carousel-img {
+      background: #ffffff;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      filter: grayscale(100%);
+    }
+    .carousel-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+    }
+    .carousel-price {
+      font-size: 1.2rem;
+      color: #231F20;
+      margin: 0.5rem 0;
+    }
+    .carousel-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-carousel {
+      flex: 1;
+      padding: 0.3rem;
+      text-align: center;
+      text-decoration: none;
+      border: 1px solid #111;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+    .btn-carousel-wa {
+      background: #111;
+      color: #fff;
+    }
+    .btn-carousel-shopee {
+      background: transparent;
+      color: #111;
+    }
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .carousel-nav button {
+      width: 48px;
+      height: 48px;
+      border: 1px solid #111;
+      background: #fff;
+      cursor: pointer;
+    }
+    .carousel-img {
+  overflow: hidden; /* important so zoom stays inside box */
+}
+
+.carousel-img img {
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.carousel-img:hover img {
+  transform: scale(1.5); /* zoom amount */
+}
+
+    /* featured product */
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      background: #fafafa;
+      padding: 3rem;
+      align-items: center;
+    }
+    .featured-img {
+      background: #fafafa;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* testimonials */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+    .testimonial-card {
+      background: #fafafa;
+      padding: 2rem;
+    }
+    .stars {
+      color: #231F20;
+      margin: 1rem 0;
+    }
+
+    /* newsletter */
+    .newsletter {
+      background: #f5f5f5;
+      padding: 4rem;
+      text-align: center;
+    }
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 2rem auto 0;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-right: none;
+    }
+    .newsletter-form button {
+      padding: 1rem 2rem;
+      background: #111;
+      color: #fff;
+      border: 1px solid #111;
+      cursor: pointer;
+    }
+
+    /* footer */
+    footer {
+      background: #111111;
+      color: #f5f5f5;
+      padding: 4rem 3rem 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 3rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .footer-logo img {
+      height: 44px;
+      filter: grayscale(100%) brightness(10);
+    }
+    .footer-links a {
+      display: block;
+      color: #ccc;
+      text-decoration: none;
+      margin: 0.5rem 0;
+    }
+    .footer-links a:hover {
+      color: #fff;
+    }
+    .social-links {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+    .social-links a {
+      color: #ccc;
+      font-size: 1.4rem;
+      transition: color 0.2s;
+    }
+    .social-links a:hover {
+      color: #2e2c2c;
+    }
+    .copyright {
+      text-align: center;
+      margin-top: 3rem;
+      color: #888;
+      font-size: 0.8rem;
+    }
+
+    /* floating whatsapp */
+    .floating-wa {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #111;
+      color: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 99;
+      transition: 0.2s;
+      text-decoration: none;
+    }
+    .floating-wa:hover {
+      background: #231F20;
+    }
+
+    
+
+/* ===== KEEP YOUR STYLE SYSTEM ===== */
+body{font-family:'Inter',sans-serif;background:#fff;color:#111;margin:0;}
+h1,h2,h3{font-family:'Playfair Display',serif;}
+
+.container{max-width:1280px;margin:auto;padding:0 2rem;}
+.section{padding:4rem 0;}
+.section-subhead{letter-spacing:4px;font-size:0.8rem;text-transform:uppercase;color:#231F20;}
+
+/* ===== PREMIUM PRODUCT GRID ===== */
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:2.5rem;
+  margin-top:3rem;
+}
+
+.product-card{
+  border:1px solid #eee;
+  padding:2rem;
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  transition:0.35s ease;
+}
+
+.product-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.06);
+}
+
+.product-img{
+  height:220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:1.5rem;
+}
+
+.product-img img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+}
+
+/* typography hierarchy */
+.product-name{
+  font-size:1.5rem;
+  margin-bottom:0.3rem;
+}
+
+.product-tag{
+  font-size:0.75rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#666;
+  margin-bottom:0.8rem;
+}
+
+.product-price{
+  font-size:1.2rem;
+  font-weight:500;
+  margin:0.5rem 0 1rem;
+}
+
+.product-desc{
+  font-size:0.95rem;
+  color:#444;
+  line-height:1.5;
+}
+
+.product-meta{
+  margin-top:1rem;
+  font-size:0.85rem;
+  color:#666;
+  line-height:1.6;
+  border-top:1px solid #eee;
+  padding-top:1rem;
+}
+
+.best{
+  border:2px solid #111;
+}
+
+.btn{
+display:inline-block;
+padding:0.6rem 1.6rem;
+border:1px solid #111;
+text-decoration:none;
+font-size:0.8rem;
+margin-top:1rem;
+}
+
+.btn-accent{
+background:#111;color:#fff;
+}
+
+
+
+/* ===== ROUTINE ===== */
+.routine{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:2rem;
+}
+
+.routine-box{
+border:1px solid #eee;
+padding:2rem;
+text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- top bar -->
+  <div class="top-bar">
+    Complimentary shipping on orders RM500+ | Join Pearls & Dews Rewards
+  </div>
+
+  <!-- floating whatsapp -->
+  <a href="https://wa.me/601127827176?text=Hello%2C%20I'm%20interested%20in%20Pearls%20%26%20Dews" class="floating-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+
+
+  <!-- navigation -->
+  <nav>
+    <div class="nav-logo">
+      <img src="logo.png" alt="Pearls & Dews">
+    </div>
+    <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li class="dropdown" id="dropdown">
+        <a href="#" class="dropdown-toggle" id="dropdownToggle">Discover</i></a>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="about.html">About</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </li>
+      <li><a href="concerns.html">Concerns</a></li>
+      <li><a href="products.html">Products</a></li>
+    </ul>
+  </nav>
+
+  <!-- thin wording slideshow banners -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ticker-item">doctor‑formulated</span>
+      <span class="ticker-item">science‑backed</span>
+      <span class="ticker-item">minimalist skincare</span>
+      <span class="ticker-item">skin barrier focused</span>
+      <span class="ticker-item">clinical elegance</span>
+      <span class="ticker-item">doctor‑formulated</span>
+      <span class="ticker-item">science‑backed</span>
+      <span class="ticker-item">minimalist skincare</span>
+      <span class="ticker-item">skin barrier focused</span>
+      <span class="ticker-item">clinical elegance</span>
+    </div>
+  </div>
+
+<section style="text-align:center;padding:3rem;">
+<h1>Skin Concerns</h1>
+<p>Clinical insights. Targeted solutions. Real results.</p>
+</section>
+
+<div class="blog-grid">
+
+<div class="blog-card" onclick="openModal('a1')">
+<div class="blog-img"><img src="topic1.jpg"></div>
+<div class="blog-content">
+<div class="tag">Acne / Pigmentation</div>
+<h3>Fade Acne Marks Faster</h3>
+<div class="product">Fade Away</div>
+</div>
+</div>
+
+<div class="blog-card" onclick="openModal('a2')">
+<div class="blog-img"><img src="topic2.jpg"></div>
+<div class="blog-content">
+<div class="tag">Oily Skin</div>
+<h3>Oily Skin Still Breaking Out</h3>
+<div class="product">Oil Balancing Hydration</div>
+</div>
+</div>
+
+<div class="blog-card" onclick="openModal('a3')">
+<div class="blog-img"><img src="topic3.jpg"></div>
+<div class="blog-content">
+<div class="tag">Acne Routine</div>
+<h3>Correct Acne Routine</h3>
+<div class="product">Fade Away</div>
+</div>
+</div>
+
+<div class="blog-card" onclick="openModal('a4')">
+<div class="blog-img"><img src="topic4.jpg"></div>
+<div class="blog-content">
+<div class="tag">Barrier Repair</div>
+<h3>Repair Skin Barrier</h3>
+<div class="product">Rescue Recovery Cream</div>
+</div>
+</div>
+
+<div class="blog-card" onclick="openModal('a5')">
+<div class="blog-img"><img src="topic5.jpg"></div>
+<div class="blog-content">
+<div class="tag">Dark Spots</div>
+<h3>Dark Spots Not Fading</h3>
+<div class="product">Fade Away</div>
+</div>
+</div>
+
+<div class="blog-card" onclick="openModal('a6')">
+<div class="blog-img"><img src="topic6.jpg"></div>
+<div class="blog-content">
+<div class="tag">Retinol</div>
+<h3>Retinol Guide</h3>
+<div class="product">Renewal Night Cream</div>
+</div>
+</div>
+
+<div class="blog-card" onclick="openModal('a7')">
+<div class="blog-img"><img src="topic7.jpg"></div>
+<div class="blog-content">
+<div class="tag">Aging</div>
+<h3>Signs of Aging</h3>
+<div class="product">Wrinkle Relaxer</div>
+</div>
+</div>
+
+<div class="blog-card" onclick="openModal('a8')">
+<div class="blog-img"><img src="topic8.jpg"></div>
+<div class="blog-content">
+<div class="tag">Sensitive Skin</div>
+<h3>Sensitive Skin Routine</h3>
+<div class="product">Rescue Recovery Cream</div>
+</div>
+</div>
+
+<div class="blog-card" onclick="openModal('a9')">
+<div class="blog-img"><img src="topic9.jpg"></div>
+<div class="blog-content">
+<div class="tag">Dull Skin</div>
+<h3>Why Skin Looks Dull</h3>
+<div class="product">Fade Away</div>
+</div>
+</div>
+
+<div class="blog-card" onclick="openModal('a10')">
+<div class="blog-img"><img src="topic10.jpg"></div>
+<div class="blog-content">
+<div class="tag">Eye Care</div>
+<h3>Dark Circles & Wrinkles</h3>
+<div class="product">Eye Perfecting Serum</div>
+</div>
+</div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">×</span>
+<div id="modal-body"></div>
+
+<div class="cta">
+<h2>Need Personalised Advice?</h2>
+<a href="https://wa.me/601127827176">WhatsApp Us</a>
+</div>
+</div>
+</div>
+
+<!-- FULL ARTICLES (HIDDEN) -->
+<div id="a1" class="hidden">
+<h3>How to Fade Acne Marks & Dark Spots Faster (Clinically Proven Routine)</h3>
+
+<p>Acne may go away, but the marks it leaves behind often remain much longer. For many people in Malaysia, Singapore, and other tropical regions, acne marks and dark spots, also known as post-inflammatory hyperpigmentation, are one of the most frustrating skin concerns.</p>
+
+<p>The reality is that most people are using the wrong approach. Some are too aggressive, while others are inconsistent. Both lead to slow or ineffective results.</p>
+
+<p>This guide explains a clinically structured routine to fade acne marks faster, safely, and effectively, without damaging your skin barrier.</p>
+
+<h3>What Are Acne Marks and Dark Spots?</h3>
+
+<p>Acne marks are not the same as acne. After inflammation from pimples or breakouts, the skin produces excess melanin as part of the healing process. This results in dark spots, uneven tone, and lingering pigmentation.</p>
+
+<p>These marks can last for months or even years if not treated correctly.</p>
+
+<h3>Why Acne Marks Are Worse in Tropical Climates</h3>
+
+<p>In Malaysia and Singapore, skin is constantly exposed to high UV levels, humidity, and heat. This combination increases oil production, triggers inflammation, and slows down the fading process of pigmentation.</p>
+
+<p>Even when acne is gone, the marks often remain due to continuous environmental exposure.</p>
+
+<h3>Common Mistakes That Slow Down Results</h3>
+
+<p>One of the biggest mistakes is skipping sunscreen. UV exposure darkens pigmentation daily, even indoors.</p>
+
+<p>Over-exfoliating is another issue. Using too many acids weakens the skin barrier and worsens marks instead of improving them.</p>
+
+<p>Using random or incompatible products reduces effectiveness and can irritate the skin.</p>
+
+<p>Ignoring inflammation is also critical. If the skin is still irritated, pigmentation will persist.</p>
+
+<h3>The Clinically Proven Approach</h3>
+
+<p>To fade acne marks effectively, your routine must focus on three key principles: controlling inflammation, brightening pigmentation, and protecting the skin from further damage.</p>
+
+<h3>Step 1: Cleanse Without Stripping the Skin</h3>
+
+<p>A proper cleanser removes oil, bacteria, and impurities while maintaining the skin barrier. Clean skin allows active ingredients to penetrate effectively.</p>
+
+<p>For acne-prone skin, a gentle exfoliating cleanser helps clear pores and prevent new breakouts that can lead to more marks.</p>
+
+<p>Recommended options include Oil Clarifying Cleanser for deep pore cleansing, and Gentle Purifying Cleanser for sensitive or recovering skin.</p>
+
+<h3>Step 2: Treat Pigmentation with Targeted Actives</h3>
+
+<p>This is the most important step. Effective treatment requires ingredients that reduce melanin production, promote skin renewal, and maintain hydration.</p>
+
+<p>Clinically proven ingredients include Vitamin C for brightening, Niacinamide for tone correction and anti-inflammation, Lactic Acid for gentle exfoliation, and Hyaluronic Acid for hydration.</p>
+
+<p>Fade Away is formulated to target these concerns by reducing pigmentation, improving uneven skin tone, and enhancing overall skin clarity.</p>
+
+<p><a href="products.html">Shop Fade Away</a></p>
+
+<h3>Step 3: Maintain Skin Balance</h3>
+
+<p>Balanced skin heals faster. If your skin is irritated or unstable, pigmentation will take longer to fade.</p>
+
+<p>A balancing serum helps calm inflammation, regulate oil production, and strengthen the skin barrier.</p>
+
+<p>Oil Balancing Hydration supports skin stability and prevents further breakouts and marks.</p>
+
+<h3>Step 4: Protect with Sunscreen</h3>
+
+<p>Sunscreen is non-negotiable. Without protection, dark spots will continue to darken and treatment becomes ineffective.</p>
+
+<p>Daily protection prevents UV-induced pigmentation and preserves your results.</p>
+
+<p>Matte BroadSpectrum SunDefence provides lightweight protection suitable for humid climates.</p>
+
+<h3>Step 5: Night Repair</h3>
+
+<p>At night, the skin repairs itself. Supporting this process can improve results and speed up fading.</p>
+
+<p>Renewal Night Cream helps enhance skin renewal, improve texture, and reduce pigmentation over time.</p>
+
+<h3>Complete Routine</h3>
+
+<p>Morning routine: cleanse, apply Fade Away, apply Oil Balancing Hydration, and finish with sunscreen.</p>
+
+<p>Night routine: cleanse, apply Fade Away, and optionally use Renewal Night Cream.</p>
+
+<h3>How Long Before Results Appear?</h3>
+
+<p>Visible brightening may appear within two to four weeks. Noticeable fading typically occurs between four to eight weeks. Significant improvement is usually seen within eight to twelve weeks.</p>
+
+<p>Consistency is more important than intensity.</p>
+
+<h3>Can Acne Marks Be Fully Removed?</h3>
+
+<p>In most cases, acne marks can fade significantly, and mild pigmentation can disappear completely with the right routine.</p>
+
+<p>Deeper pigmentation may take longer but can still be improved with consistent treatment.</p>
+
+<h3>Final Thoughts</h3>
+
+<p>Fading acne marks is not about using more products. It is about using the right combination consistently.</p>
+
+<p>When your routine is structured correctly, your skin gradually becomes clearer, more even, and healthier.</p>
+
+<h3>Start Your Routine</h3>
+
+<p>If you want to improve acne marks effectively, begin with a proper cleanser, use targeted treatment, and protect your skin daily.</p>
+
+<!-- CTA BUTTON -->
+<div style="margin-top:2.5rem;">
+  <a href="products.html" class="btn btn-primary">Shop Recommended Products</a>
+</div>
+
+<!-- OPTIONAL SECOND CTA -->
+<div style="margin-top:1rem;">
+  <a href="https://wa.me/601127827176" class="btn">Get Personalised Advice</a>
+</div>
+
+<p style="margin-top:2rem;">Pearls & Dews — Clinical, minimal, effective skincare.</p>
+</div>
+
+<div id="a2" class="hidden">
+<h3>Oily Skin but Still Breaking Out? Here’s the Real Cause (And Fix)</h3>
+
+<p>If you have oily skin, you’ve probably been told that your breakouts are caused by excess oil.</p>
+
+<p>So you wash your face more often, use stronger cleansers, avoid moisturisers, and try to dry out your skin. But despite all that, the acne keeps coming back.</p>
+
+<p>This is one of the most common skin frustrations in Malaysia, Singapore, and other humid regions.</p>
+
+<p>The truth is that oil is only part of the problem. In many cases, your breakouts are not caused by too much oil, but by an imbalance in your skin.</p>
+
+<p>This guide explains the real causes behind oily, acne-prone skin and a clinically effective routine to fix it.</p>
+
+<h3>Why Oily Skin Still Breaks Out</h3>
+
+<p>Oily skin means your sebaceous glands produce more oil. However, acne does not happen just because of oil alone.</p>
+
+<p>Breakouts occur when excess oil, dead skin buildup, bacteria, and inflammation combine. Even if oil is reduced, the other factors can still trigger acne.</p>
+
+<h3>The Hidden Cause: Dehydrated Oily Skin</h3>
+
+<p>Your skin can be oily on the surface but dehydrated underneath.</p>
+
+<p>When your skin lacks water, it compensates by producing more oil. This leads to clogged pores, increased breakouts, and persistent acne despite using oil-control products.</p>
+
+<p>This condition is known as oily-dehydrated skin and is extremely common in tropical climates.</p>
+
+<h3>Why This Happens in Tropical Climates</h3>
+
+<p>Hot and humid environments increase sweating and oil production. Many people respond by over-cleansing, skipping moisturisers, and overusing exfoliants.</p>
+
+<p>This damages the skin barrier and makes acne worse instead of better.</p>
+
+<h3>Signs Your Skin Is Oily but Dehydrated</h3>
+
+<p>Your skin may be imbalanced if it feels tight after cleansing, becomes oily quickly, shows both dryness and breakouts, or does not improve despite strong products.</p>
+
+<h3>Common Mistakes</h3>
+
+<p>Over-cleansing strips natural oils and triggers more oil production.</p>
+
+<p>Using harsh acne products increases irritation.</p>
+
+<p>Skipping hydration weakens the skin barrier.</p>
+
+<p>Focusing only on oil instead of balance leads to recurring breakouts.</p>
+
+<h3>The Correct Approach</h3>
+
+<p>To improve oily acne-prone skin, your routine must cleanse effectively, balance oil production, hydrate the skin, and reduce inflammation.</p>
+
+<h3>Step 1: Cleanse Properly</h3>
+
+<p>You need a cleanser that removes oil and clears pores without stripping your skin.</p>
+
+<p>Oil Clarifying Cleanser helps deep clean pores, remove buildup, and prevent clogging.</p>
+
+<h3>Step 2: Restore Balance</h3>
+
+<p>After cleansing, your skin needs to stabilise.</p>
+
+<p>Oil Balancing Hydration helps regulate oil production, reduce redness, and strengthen the skin barrier.</p>
+
+<h3>Step 3: Treat Acne and Marks</h3>
+
+<p>Fade Away helps reduce acne marks, brighten skin tone, and improve clarity.</p>
+
+<h3>Step 4: Protect Your Skin</h3>
+
+<p>Sunscreen is essential even for oily skin.</p>
+
+<p>Matte BroadSpectrum SunDefence provides lightweight protection suitable for humid climates.</p>
+
+<h3>Step 5: Support Skin Recovery</h3>
+
+<p>Rescue Recovery Cream helps repair the barrier and reduce irritation.</p>
+
+<h3>Daily Routine</h3>
+
+<p>Morning: Cleanser → Oil Balancing Hydration → Fade Away → Sunscreen</p>
+<p>Night: Cleanser → Oil Balancing Hydration → Fade Away</p>
+
+<h3>How Long Before Results</h3>
+
+<p>Results typically appear within two to eight weeks with consistent use.</p>
+
+<h3>Final Thoughts</h3>
+
+<p>Oily skin is not the problem. Imbalance is.</p>
+
+<p>A structured routine will gradually restore clarity and control breakouts.</p>
+
+<!-- CTA BUTTON -->
+<div style="margin-top:2.5rem;">
+  <a href="products.html" class="btn btn-primary">Shop Recommended Products</a>
+</div>
+
+<!-- OPTIONAL SECOND CTA -->
+<div style="margin-top:1rem;">
+  <a href="https://wa.me/601127827176" class="btn">Get Personalised Advice</a>
+</div>
+
+<p style="margin-top:2rem;">Pearls & Dews — Clinical, minimal, effective skincare.</p>
+</div>
+
+<div id="a3" class="hidden">
+<h3>The Correct Skincare Routine for Acne (Step-by-Step)</h3>
+
+<p>Acne is one of the most common skin concerns, yet one of the most misunderstood. Many people with acne-prone skin are doing too much by using too many products, over-exfoliating, and constantly switching routines.</p>
+
+<p>Despite all the effort, breakouts continue. The problem is not a lack of products, but a lack of structure.</p>
+
+<p>This guide explains a clinically structured routine designed to reduce breakouts, prevent clogged pores, fade acne marks, and strengthen your skin barrier.</p>
+
+<h3>What Causes Acne</h3>
+
+<p>Acne occurs when excess oil, dead skin buildup, bacteria, and inflammation combine. An effective routine must address all of these factors, not just oil.</p>
+
+<h3>Why Most Acne Routines Fail</h3>
+
+<p>Many routines focus only on drying out acne while ignoring hydration and skin barrier health. This leads to irritation, increased oil production, and worsening breakouts.</p>
+
+<p>The correct approach is balance, not aggression.</p>
+
+<h3>Step 1: Cleanse Properly</h3>
+
+<p>Cleansing removes excess oil, dirt, and dead skin cells. The key is to cleanse without stripping your skin.</p>
+
+<p>Oil Clarifying Cleanser helps unclog pores, remove buildup, and reduce future breakouts.</p>
+
+<p>Use twice daily with gentle massage and rinse thoroughly.</p>
+
+<h3>Step 2: Balance Oil and Calm Skin</h3>
+
+<p>After cleansing, your skin needs to stabilise. Without this step, oil production increases and acne persists.</p>
+
+<p>Oil Balancing Hydration helps regulate oil, reduce redness, and strengthen the skin barrier.</p>
+
+<p>Balanced skin leads to fewer breakouts.</p>
+
+<h3>Step 3: Treat Acne and Prevent Marks</h3>
+
+<p>This is the most important step. You need ingredients that reduce inflammation, improve skin renewal, and prevent long-term marks.</p>
+
+<p>Fade Away helps reduce acne marks, improve uneven skin tone, and support clearer skin.</p>
+
+<h3>Step 4: Moisturise</h3>
+
+<p>Skipping moisturiser is a major mistake. Without hydration, your skin becomes dehydrated, produces more oil, and worsens breakouts.</p>
+
+<p>Rescue Recovery Cream helps repair the skin barrier, reduce irritation, and maintain hydration.</p>
+
+<h3>Step 5: Protect with Sunscreen</h3>
+
+<p>Sunscreen is essential for acne-prone skin. Without it, acne marks darken, inflammation worsens, and healing slows down.</p>
+
+<p>Matte BroadSpectrum SunDefence provides lightweight daily protection suitable for humid climates.</p>
+
+<h3>Daily Routine</h3>
+
+<p>Morning: Cleanser, Oil Balancing Hydration, Fade Away, Sunscreen.</p>
+
+<p>Night: Cleanser, Oil Balancing Hydration, Fade Away, optional moisturiser.</p>
+
+<h3>Optional Night Treatment</h3>
+
+<p>If your skin is stable, Renewal Night Cream can be added to improve skin texture and support renewal.</p>
+
+<h3>How Long Before Results</h3>
+
+<p>Within one to two weeks, oil and irritation may reduce. Within two to four weeks, breakouts decrease. Within four to eight weeks, skin becomes clearer.</p>
+
+<p>Consistency is key.</p>
+
+<h3>Common Mistakes to Avoid</h3>
+
+<p>Over-exfoliating damages the skin barrier.</p>
+<p>Using too many products increases irritation.</p>
+<p>Skipping sunscreen reverses progress.</p>
+<p>Changing routines too often prevents results.</p>
+
+<h3>Final Thoughts</h3>
+
+<p>Acne-prone skin does not need more products. It needs the right structure.</p>
+
+<p>A consistent, balanced routine will gradually improve your skin and reduce breakouts.</p>
+
+<div style="margin-top:2rem;">
+  <a href="products.html" class="btn btn-primary">Shop Recommended Product</a>
+</div>
+
+<div style="margin-top:1rem;">
+  <a href="https://wa.me/601127827176" class="btn">Get Personalised Advice</a>
+</div>
+
+<p style="margin-top:2rem;">Pearls & Dews — Clinical, minimal, effective skincare.</p>
+</div>
+
+<div id="a4" class="hidden">
+<h3>How to Repair Your Skin Barrier After Acne Treatments</h3>
+
+<p>Acne treatments can be effective, but they often come with a cost. If your skin suddenly feels tight, dry, irritated, or more sensitive than usual, your skin barrier is likely compromised.</p>
+
+<p>This is a common issue, especially for those using strong acne products, exfoliating acids, or retinol.</p>
+
+<p>The problem is not the treatment itself, but what happens after. If your skin barrier is not repaired properly, you may experience more breakouts, redness, and slower healing.</p>
+
+<h3>What Is the Skin Barrier</h3>
+
+<p>Your skin barrier is the outermost layer of your skin. It protects against environmental damage, prevents moisture loss, and keeps your skin balanced.</p>
+
+<p>When it is healthy, your skin appears smooth, hydrated, and calm. When it is damaged, your skin becomes reactive and unstable.</p>
+
+<h3>Signs of a Damaged Skin Barrier</h3>
+
+<p>Your skin barrier may be compromised if you experience burning or stinging when applying products, increased sensitivity, redness, dryness with oiliness, or breakouts that do not heal properly.</p>
+
+<h3>Why Acne Treatments Damage the Skin Barrier</h3>
+
+<p>Many acne treatments work by exfoliating the skin, reducing oil, and increasing cell turnover. When overused, these processes strip natural oils and weaken your skin’s protective layer.</p>
+
+<p>This is especially problematic in tropical climates, where heat and humidity can increase irritation.</p>
+
+<h3>Common Mistakes That Delay Recovery</h3>
+
+<p>Continuing strong actives while your skin is irritated will worsen the condition.</p>
+
+<p>Over-cleansing strips essential lipids and slows healing.</p>
+
+<p>Skipping moisturiser prevents your skin from repairing itself.</p>
+
+<p>Using too many products overwhelms your skin instead of helping it.</p>
+
+<h3>The Correct Approach to Repair Your Skin Barrier</h3>
+
+<p>The goal is to reduce irritation, restore hydration, and rebuild protection.</p>
+
+<h3>Step 1: Switch to a Gentle Cleanser</h3>
+
+<p>Your cleanser should remove impurities while maintaining hydration.</p>
+
+<p>Gentle Purifying Cleanser helps cleanse the skin without stripping it, while soothing and calming irritation.</p>
+
+<h3>Step 2: Calm and Rebalance the Skin</h3>
+
+<p>After cleansing, your skin needs to stabilise.</p>
+
+<p>Oil Balancing Hydration helps reduce redness, regulate oil production, and support the skin barrier.</p>
+
+<h3>Step 3: Repair the Skin Barrier</h3>
+
+<p>This is the most important step.</p>
+
+<p>Rescue Recovery Cream is designed to repair damaged skin, reduce inflammation, and promote healing.</p>
+
+<p>Key ingredients such as Centella Asiatica, Vitamin B5, and Squalane help restore your skin’s protective function.</p>
+
+<h3>Step 4: Protect Your Skin Daily</h3>
+
+<p>A damaged skin barrier is more vulnerable to UV damage and pigmentation.</p>
+
+<p>Matte BroadSpectrum SunDefence provides essential protection while maintaining a lightweight feel suitable for daily use.</p>
+
+<h3>Simple Repair Routine</h3>
+
+<p>Morning: Gentle Cleanser, Oil Balancing Hydration, Rescue Recovery Cream, Sunscreen.</p>
+
+<p>Night: Gentle Cleanser, Oil Balancing Hydration, Rescue Recovery Cream.</p>
+
+<h3>How Long Does Recovery Take</h3>
+
+<p>Within a few days, irritation may reduce. Within one to two weeks, hydration improves. Within two to four weeks, the skin barrier is significantly restored.</p>
+
+<p>Consistency is essential for full recovery.</p>
+
+<h3>When to Reintroduce Active Ingredients</h3>
+
+<p>Only reintroduce active treatments when your skin no longer stings, redness has reduced, and your skin feels stable.</p>
+
+<p>Start slowly and monitor your skin’s response.</p>
+
+<h3>Why Barrier Repair Is Important for Acne</h3>
+
+<p>A damaged skin barrier can actually worsen acne. When your skin is compromised, inflammation increases, oil production becomes unstable, and breakouts become more frequent.</p>
+
+<p>Healthy skin leads to better acne control.</p>
+
+<h3>Final Thoughts</h3>
+
+<p>Repairing your skin barrier is not about using more products. It is about using the right ones consistently and allowing your skin to recover.</p>
+
+<p>With proper care, your skin becomes stronger, calmer, and more resilient.</p>
+
+<div style="margin-top:2rem;">
+  <a href="products.html" class="btn btn-primary">Shop Recommended Product</a>
+</div>
+
+<div style="margin-top:1rem;">
+  <a href="https://wa.me/601127827176" class="btn">Get Personalised Advice</a>
+</div>
+
+<p style="margin-top:2rem;">Pearls & Dews — Clinical, minimal, effective skincare.</p>
+</div>
+
+<div id="a5" class="hidden">
+<h3>Why Your Dark Spots Are Not Fading (And What Actually Works)</h3>
+
+<p>You’ve tried brightening serums, spot correctors, and multiple skincare routines, yet your dark spots remain. This is one of the most common frustrations, especially in Malaysia, Singapore, and tropical climates.</p>
+
+<p>The issue is not always the product. In most cases, it is the approach.</p>
+
+<p>Dark spots, also known as post-inflammatory hyperpigmentation, require a structured and consistent routine to improve effectively.</p>
+
+<h3>What Causes Dark Spots</h3>
+
+<p>Dark spots form when your skin produces excess melanin after inflammation. This can be triggered by acne, sun exposure, irritation, or skin damage.</p>
+
+<p>Without proper care, these marks can remain for months and may even become darker over time.</p>
+
+<h3>Why Dark Spots Are Harder to Treat in Tropical Climates</h3>
+
+<p>In hot and humid environments, your skin is constantly exposed to high UV levels. This continuously stimulates melanin production and slows down the fading process.</p>
+
+<p>Even minimal sun exposure can undo your progress.</p>
+
+<h3>The Real Reasons Your Dark Spots Are Not Fading</h3>
+
+<p>One of the main reasons is inconsistent sunscreen use. Without daily protection, UV exposure darkens pigmentation and reverses improvement.</p>
+
+<p>Using the wrong ingredients is another issue. Not all brightening products contain effective concentrations or clinically proven actives.</p>
+
+<p>Ongoing inflammation also prevents healing. If your skin is still irritated or breaking out, pigmentation will persist.</p>
+
+<p>Over-exfoliating can worsen the condition by damaging the skin barrier and increasing sensitivity.</p>
+
+<p>Finally, lack of consistency delays results. Pigmentation takes time to fade, and switching products too often disrupts progress.</p>
+
+<h3>The Correct Approach to Fade Dark Spots</h3>
+
+<p>To improve pigmentation effectively, your routine must reduce melanin production, promote skin renewal, control inflammation, and protect against UV damage.</p>
+
+<h3>Step 1: Cleanse Properly</h3>
+
+<p>A proper cleanser removes oil, impurities, and buildup, allowing treatment products to work effectively.</p>
+
+<p>Oil Clarifying Cleanser helps clear pores, while Gentle Purifying Cleanser is suitable for sensitive or recovering skin.</p>
+
+<h3>Step 2: Use Targeted Brightening Treatment</h3>
+
+<p>This is the most important step.</p>
+
+<p>Fade Away is formulated to reduce pigmentation, improve uneven skin tone, and enhance skin clarity.</p>
+
+<p>Key ingredients such as Vitamin C, Niacinamide, and Lactic Acid help inhibit melanin production, support gentle renewal, and maintain hydration.</p>
+
+<h3>Step 3: Maintain Skin Balance</h3>
+
+<p>Balanced skin heals faster and reduces the risk of new pigmentation forming.</p>
+
+<p>Oil Balancing Hydration helps regulate oil, reduce redness, and support the skin barrier.</p>
+
+<h3>Step 4: Protect with Sunscreen</h3>
+
+<p>Sunscreen is essential. Without it, dark spots will continue to darken and treatments will be less effective.</p>
+
+<p>Matte BroadSpectrum SunDefence provides daily protection while remaining lightweight for humid climates.</p>
+
+<h3>Step 5: Support Skin Renewal</h3>
+
+<p>At night, your skin naturally repairs itself.</p>
+
+<p>Renewal Night Cream helps improve texture, enhance skin renewal, and support long-term results.</p>
+
+<h3>Complete Routine</h3>
+
+<p>Morning: Cleanser, Fade Away, Oil Balancing Hydration, Sunscreen.</p>
+
+<p>Night: Cleanser, Fade Away, optional Renewal Night Cream.</p>
+
+<h3>How Long Before Results</h3>
+
+<p>Within two to four weeks, skin may appear brighter. Within four to eight weeks, dark spots begin to fade. Significant improvement typically occurs within eight to twelve weeks.</p>
+
+<p>Consistency is essential.</p>
+
+<h3>Can Dark Spots Be Fully Removed</h3>
+
+<p>In many cases, dark spots can fade significantly, and mild pigmentation may disappear completely. Deeper pigmentation may take longer but can still improve with proper care.</p>
+
+<h3>Common Mistakes to Avoid</h3>
+
+<p>Skipping sunscreen reverses progress.</p>
+<p>Using too many active ingredients causes irritation.</p>
+<p>Expecting fast results leads to inconsistency.</p>
+<p>Ignoring skin barrier health slows healing.</p>
+
+<h3>Final Thoughts</h3>
+
+<p>Dark spots do not fade overnight. With the correct routine and consistent care, your skin can gradually become clearer and more even.</p>
+
+<p>The key is not using more products, but using the right ones consistently.</p>
+
+<div style="margin-top:2rem;">
+  <a href="products.html" class="btn btn-primary">Shop Recommended Product</a>
+</div>
+
+<div style="margin-top:1rem;">
+  <a href="https://wa.me/601127827176" class="btn">Get Personalised Advice</a>
+</div>
+
+<p style="margin-top:2rem;">Pearls & Dews — Clinical, minimal, effective skincare.</p>
+</div>
+
+<div id="a6" class="hidden">
+<h3>Retinol for Beginners: How to Use It Without Damaging Your Skin</h3>
+
+<p>Retinol is one of the most effective ingredients in skincare. It is widely used to improve skin texture, reduce fine lines, fade pigmentation, and support overall skin renewal.</p>
+
+<p>However, many beginners experience irritation, dryness, or breakouts when using retinol. This is not because retinol does not work, but because it is often used incorrectly.</p>
+
+<p>This guide explains how to use retinol safely and effectively, especially in tropical climates like Malaysia and Singapore.</p>
+
+<h3>What Is Retinol</h3>
+
+<p>Retinol is a form of Vitamin A that increases skin cell turnover and stimulates collagen production. This helps improve skin texture, reduce wrinkles, and brighten the complexion.</p>
+
+<p>When used correctly, retinol can significantly improve overall skin quality.</p>
+
+<h3>Why Beginners Experience Irritation</h3>
+
+<p>Retinol is a powerful active ingredient. Using it too frequently, applying too much, or combining it with strong acids can overwhelm your skin.</p>
+
+<p>This often leads to redness, peeling, dryness, and a weakened skin barrier.</p>
+
+<h3>Signs You Are Using Retinol Incorrectly</h3>
+
+<p>Common signs include burning or stinging, excessive dryness, flaking, and increased sensitivity.</p>
+
+<p>Mild dryness is normal, but strong irritation indicates that your skin needs adjustment.</p>
+
+<h3>The Correct Way to Use Retinol</h3>
+
+<p>The key to retinol is gradual introduction and proper support.</p>
+
+<h3>Step 1: Start Slowly</h3>
+
+<p>Begin with two to three times per week. Allow your skin to adjust before increasing frequency.</p>
+
+<p>Using retinol daily too soon can damage your skin barrier.</p>
+
+<h3>Step 2: Use Only at Night</h3>
+
+<p>Retinol increases sensitivity to sunlight and should only be applied at night.</p>
+
+<p>This allows your skin to repair and renew without UV exposure.</p>
+
+<h3>Step 3: Apply the Correct Amount</h3>
+
+<p>A small amount is sufficient for the entire face. Using more will not improve results and will increase irritation.</p>
+
+<h3>Step 4: Support with Hydration</h3>
+
+<p>Hydration is essential when using retinol.</p>
+
+<p>Rescue Recovery Cream helps reduce irritation, repair the skin barrier, and maintain moisture balance.</p>
+
+<h3>Step 5: Avoid Combining with Strong Actives</h3>
+
+<p>Avoid using retinol together with strong exfoliating acids or harsh acne treatments in the same routine.</p>
+
+<p>This prevents overloading your skin.</p>
+
+<h3>Step 6: Use Sunscreen Daily</h3>
+
+<p>Retinol makes your skin more sensitive to UV exposure.</p>
+
+<p>Without sunscreen, your skin becomes more prone to damage and pigmentation.</p>
+
+<p>Matte BroadSpectrum SunDefence provides lightweight daily protection suitable for tropical climates.</p>
+
+<h3>Recommended Retinol Product</h3>
+
+<p>Renewal Night Cream is formulated with encapsulated retinol for a gentler release, combined with Vitamin C and peptides.</p>
+
+<p>This helps improve skin texture, reduce fine lines, and support skin renewal while minimising irritation.</p>
+
+<h3>Simple Retinol Routine</h3>
+
+<p>Morning: Cleanser, hydration, sunscreen.</p>
+
+<p>Night (retinol days): Cleanser, Renewal Night Cream, moisturiser if needed.</p>
+
+<p>Night (non-retinol days): Cleanser, hydration, moisturiser.</p>
+
+<h3>What to Expect</h3>
+
+<p>During the first two weeks, mild dryness or sensitivity may occur.</p>
+
+<p>By four weeks, skin begins to adjust and texture improves.</p>
+
+<p>By six to eight weeks, visible improvements in tone and smoothness can be seen.</p>
+
+<h3>Does Retinol Cause Purging</h3>
+
+<p>Retinol can cause temporary purging as skin cell turnover increases. This typically lasts two to four weeks.</p>
+
+<p>If irritation persists longer, your skin may be overwhelmed rather than purging.</p>
+
+<h3>Special Considerations for Tropical Climate</h3>
+
+<p>In hot and humid environments, use lightweight layers and avoid heavy products during the day.</p>
+
+<p>Consistent sunscreen use is essential to prevent sensitivity and pigmentation.</p>
+
+<h3>Common Mistakes to Avoid</h3>
+
+<p>Using retinol too frequently too soon.</p>
+<p>Skipping moisturiser and hydration.</p>
+<p>Combining too many active ingredients.</p>
+<p>Not using sunscreen.</p>
+
+<h3>Final Thoughts</h3>
+
+<p>Retinol is highly effective when used correctly. The key is to start slowly, support your skin, and stay consistent.</p>
+
+<p>With proper use, retinol can significantly improve skin texture, tone, and overall appearance.</p>
+
+<div style="margin-top:2rem;">
+  <a href="products.html" class="btn btn-primary">Shop Recommended Product</a>
+</div>
+
+<div style="margin-top:1rem;">
+  <a href="https://wa.me/601127827176" class="btn">Get Personalised Advice</a>
+</div>
+
+<p style="margin-top:2rem;">Pearls & Dews — Clinical, minimal, effective skincare.</p>
+</div>
+
+<div id="a7" class="hidden">
+<h3>Signs Your Skin Is Aging Faster Than It Should (And How to Slow It Down)</h3>
+
+<p>Aging is a natural process, but when your skin begins to show signs earlier than expected, it may be experiencing accelerated aging.</p>
+
+<p>If you are noticing fine lines, dullness, loss of firmness, or uneven skin tone, your skin may be aging faster than it should.</p>
+
+<p>This is increasingly common in Malaysia, Singapore, and tropical climates where environmental stress plays a significant role.</p>
+
+<h3>What Is Accelerated Skin Aging</h3>
+
+<p>Accelerated aging occurs when external factors such as UV exposure, pollution, stress, and improper skincare cause the skin to age faster than its natural rate.</p>
+
+<p>This leads to early wrinkles, pigmentation, and loss of elasticity.</p>
+
+<h3>Early Signs of Aging Skin</h3>
+
+<p>Fine lines appearing earlier than expected, especially around the eyes and forehead.</p>
+
+<p>Loss of firmness and elasticity, resulting in less “bouncy” skin.</p>
+
+<p>Dull and uneven skin tone due to slower cell turnover.</p>
+
+<p>Increased pigmentation and dark spots caused by sun exposure.</p>
+
+<p>Slower healing and recovery from breakouts or irritation.</p>
+
+<h3>Why Skin Ages Faster in Tropical Climates</h3>
+
+<p>High UV exposure is the primary cause of premature aging, contributing to collagen breakdown and pigmentation.</p>
+
+<p>Heat and humidity increase inflammation and affect skin balance.</p>
+
+<p>Environmental stress accelerates oxidative damage over time.</p>
+
+<h3>Main Causes of Premature Aging</h3>
+
+<p>Sun exposure breaks down collagen and leads to wrinkles and pigmentation.</p>
+
+<p>Oxidative stress from pollution and environmental factors damages skin cells.</p>
+
+<p>Dehydration reduces skin elasticity and enhances fine lines.</p>
+
+<p>Poor skincare habits weaken the skin barrier and accelerate visible aging.</p>
+
+<h3>The Correct Approach to Slow Down Aging</h3>
+
+<p>To maintain youthful skin, your routine must protect, repair, and stimulate collagen production.</p>
+
+<h3>Step 1: Cleanse Gently</h3>
+
+<p>A gentle cleanser removes impurities while maintaining hydration and protecting the skin barrier.</p>
+
+<p>Gentle Purifying Cleanser helps cleanse without causing dryness or irritation.</p>
+
+<h3>Step 2: Use Antioxidants</h3>
+
+<p>Antioxidants protect the skin from environmental damage and improve overall skin tone.</p>
+
+<p>Fade Away helps brighten the skin, reduce pigmentation, and improve clarity.</p>
+
+<h3>Step 3: Stimulate Collagen Production</h3>
+
+<p>Collagen loss is a major cause of aging.</p>
+
+<p>Wrinkle Relaxer helps reduce expression lines, improve firmness, and enhance skin elasticity.</p>
+
+<h3>Step 4: Support Skin Renewal</h3>
+
+<p>Skin renewal slows down with age.</p>
+
+<p>Renewal Night Cream helps improve texture, reduce fine lines, and support skin regeneration.</p>
+
+<h3>Step 5: Deep Nourishment</h3>
+
+<p>Mature skin requires additional support to maintain elasticity and hydration.</p>
+
+<p>Uplifting Replenishing Cream helps nourish the skin and improve overall firmness.</p>
+
+<h3>Step 6: Protect Your Skin Daily</h3>
+
+<p>Sunscreen is essential to prevent further damage and maintain results.</p>
+
+<p>Matte BroadSpectrum SunDefence provides daily protection against UV exposure.</p>
+
+<h3>Complete Routine</h3>
+
+<p>Morning: Cleanser, Fade Away, Wrinkle Relaxer, Sunscreen.</p>
+
+<p>Night: Cleanser, Wrinkle Relaxer, Renewal Night Cream, moisturiser if needed.</p>
+
+<h3>How Long Before Results</h3>
+
+<p>Within two to four weeks, skin appears more hydrated and radiant.</p>
+
+<p>Within four to eight weeks, texture improves and fine lines become less visible.</p>
+
+<p>Within eight to twelve weeks, overall skin firmness and tone improve.</p>
+
+<h3>Can Aging Be Reversed</h3>
+
+<p>Aging cannot be completely stopped, but it can be slowed down significantly.</p>
+
+<p>With the right routine, your skin can look healthier, firmer, and more youthful.</p>
+
+<h3>Common Mistakes to Avoid</h3>
+
+<p>Skipping sunscreen accelerates aging.</p>
+<p>Using too many products causes irritation.</p>
+<p>Ignoring hydration weakens the skin barrier.</p>
+<p>Inconsistent routine delays results.</p>
+
+<h3>Final Thoughts</h3>
+
+<p>Premature aging is influenced by environment, lifestyle, and skincare habits.</p>
+
+<p>A consistent routine focused on protection, repair, and renewal can significantly slow down visible aging.</p>
+
+<div style="margin-top:2rem;">
+  <a href="products.html" class="btn btn-primary">Shop Recommended Product</a>
+</div>
+
+<div style="margin-top:1rem;">
+  <a href="https://wa.me/601127827176" class="btn">Get Personalised Advice</a>
+</div>
+
+<p style="margin-top:2rem;">Pearls & Dews — Clinical, minimal, effective skincare.</p>
+</div>
+
+<div id="a8" class="hidden">
+<h3>Best Skincare Routine for Sensitive & Easily Irritated Skin</h3>
+
+<p>If your skin reacts easily, turns red, or feels uncomfortable after using skincare, you may have sensitive or easily irritated skin.</p>
+
+<p>This condition is common in Malaysia, Singapore, and tropical climates where heat, humidity, and environmental stress constantly affect the skin.</p>
+
+<p>Sensitive skin is not about using more products. It is about using the right approach to calm, repair, and protect the skin barrier.</p>
+
+<h3>What Is Sensitive Skin</h3>
+
+<p>Sensitive skin is a condition where the skin barrier is weakened and more reactive to external factors.</p>
+
+<p>This makes your skin more vulnerable to irritation, inflammation, and environmental stress.</p>
+
+<h3>Common Signs of Sensitive Skin</h3>
+
+<p>Redness or flushing after applying products.</p>
+<p>Burning or stinging sensations.</p>
+<p>Dryness or tightness.</p>
+<p>Breakouts after trying new products.</p>
+<p>Skin that reacts unpredictably.</p>
+
+<h3>Why Sensitive Skin Is Worse in Tropical Climates</h3>
+
+<p>High temperatures, humidity, and pollution can disrupt the skin barrier and increase irritation.</p>
+
+<p>Frequent cleansing and sweating can further weaken the skin’s natural protection.</p>
+
+<h3>Common Mistakes</h3>
+
+<p>Using too many active ingredients overwhelms the skin.</p>
+<p>Over-cleansing strips natural oils and worsens sensitivity.</p>
+<p>Skipping moisturiser prevents barrier repair.</p>
+<p>Changing products too frequently prevents the skin from stabilising.</p>
+
+<h3>The Correct Approach</h3>
+
+<p>The goal is to calm irritation, restore hydration, and strengthen the skin barrier.</p>
+
+<h3>Step 1: Use a Gentle Cleanser</h3>
+
+<p>Your cleanser should remove impurities without stripping the skin.</p>
+
+<p>Gentle Purifying Cleanser helps cleanse while soothing and maintaining hydration.</p>
+
+<h3>Step 2: Restore Balance</h3>
+
+<p>After cleansing, your skin needs to stabilise.</p>
+
+<p>Oil Balancing Hydration helps reduce redness, regulate oil, and support the skin barrier.</p>
+
+<h3>Step 3: Repair the Skin Barrier</h3>
+
+<p>This is the most important step.</p>
+
+<p>Rescue Recovery Cream helps repair the skin barrier, reduce inflammation, and promote healing.</p>
+
+<p>Key ingredients such as Centella Asiatica, Vitamin B5, and Squalane support long-term skin stability.</p>
+
+<h3>Step 4: Protect Your Skin</h3>
+
+<p>Sensitive skin is more vulnerable to environmental damage.</p>
+
+<p>Matte BroadSpectrum SunDefence provides daily protection while remaining lightweight and suitable for sensitive skin.</p>
+
+<h3>Simple Routine</h3>
+
+<p>Morning: Gentle Cleanser, Oil Balancing Hydration, Rescue Recovery Cream, Sunscreen.</p>
+
+<p>Night: Gentle Cleanser, Oil Balancing Hydration, Rescue Recovery Cream.</p>
+
+<h3>What to Avoid</h3>
+
+<p>Strong exfoliating acids used frequently.</p>
+<p>Retinol until your skin becomes stable.</p>
+<p>Fragrance-heavy products.</p>
+<p>Alcohol-based formulations.</p>
+
+<h3>How Long Before Improvement</h3>
+
+<p>Within a few days, irritation may reduce.</p>
+
+<p>Within one to two weeks, skin becomes more comfortable.</p>
+
+<p>Within two to four weeks, the skin barrier becomes stronger and more stable.</p>
+
+<h3>Can Sensitive Skin Be Fixed</h3>
+
+<p>Sensitive skin cannot always be permanently removed, but it can be managed and significantly improved.</p>
+
+<p>With consistent care, your skin becomes less reactive and more resilient.</p>
+
+<h3>Final Thoughts</h3>
+
+<p>Sensitive skin requires a minimal and consistent approach.</p>
+
+<p>When your skin barrier is strong, your skin becomes calmer, healthier, and easier to manage.</p>
+
+<div style="margin-top:2rem;">
+  <a href="products.html" class="btn btn-primary">Shop Recommended Product</a>
+</div>
+
+<div style="margin-top:1rem;">
+  <a href="https://wa.me/601127827176" class="btn">Get Personalised Advice</a>
+</div>
+
+<p style="margin-top:2rem;">Pearls & Dews — Clinical, minimal, effective skincare.</p>
+</div>
+
+<div id="a9" class="hidden">
+<h3>Why Your Skin Looks Dull (Even After Skincare) — Real Causes & Fixes</h3>
+
+<p>You may be using skincare consistently, yet your skin still looks tired, uneven, and lacks radiance. This is one of the most common concerns, especially in Malaysia, Singapore, and tropical climates.</p>
+
+<p>The issue is not always about using more products. In many cases, dull skin is caused by underlying imbalances that are not being addressed properly.</p>
+
+<p>This guide explains the real causes of dull skin and how to restore a clearer, brighter complexion.</p>
+
+<h3>What Is Dull Skin</h3>
+
+<p>Dull skin is characterised by a lack of radiance, uneven tone, rough texture, and a tired appearance.</p>
+
+<p>Healthy skin reflects light evenly, while dull skin appears flat and uneven.</p>
+
+<h3>Main Causes of Dull Skin</h3>
+
+<p>Dead skin buildup prevents light from reflecting evenly, making the skin appear rough and uneven.</p>
+
+<p>Dehydration reduces skin brightness and makes fine lines more visible.</p>
+
+<p>Pigmentation and uneven tone disrupt overall skin clarity.</p>
+
+<p>A weakened skin barrier reduces hydration and slows down repair.</p>
+
+<p>Environmental stress such as UV exposure and pollution contributes to oxidative damage.</p>
+
+<h3>Why Your Skincare Routine Is Not Working</h3>
+
+<p>Many routines lack effective active ingredients needed for brightening and renewal.</p>
+
+<p>Some routines focus too much on cleansing and not enough on treatment.</p>
+
+<p>Using too many products can cause irritation and reduce effectiveness.</p>
+
+<p>Skipping sunscreen allows damage to accumulate daily.</p>
+
+<h3>The Correct Approach</h3>
+
+<p>To improve dull skin, your routine must support renewal, hydration, and protection.</p>
+
+<h3>Step 1: Cleanse Properly</h3>
+
+<p>A proper cleanser removes buildup and prepares your skin for treatment.</p>
+
+<p>Oil Clarifying Cleanser helps clear pores and improve texture, while Gentle Purifying Cleanser is suitable for sensitive skin.</p>
+
+<h3>Step 2: Brighten and Even Skin Tone</h3>
+
+<p>This is the most important step.</p>
+
+<p>Fade Away helps reduce pigmentation, improve uneven skin tone, and restore skin clarity.</p>
+
+<p>Key ingredients such as Vitamin C, Niacinamide, and Lactic Acid support brightening and gentle renewal.</p>
+
+<h3>Step 3: Hydrate and Balance</h3>
+
+<p>Hydration is essential for radiant skin.</p>
+
+<p>Oil Balancing Hydration helps maintain moisture balance, reduce irritation, and support the skin barrier.</p>
+
+<h3>Step 4: Support Skin Renewal</h3>
+
+<p>At night, your skin repairs itself.</p>
+
+<p>Renewal Night Cream helps improve texture, enhance skin renewal, and reduce dullness over time.</p>
+
+<h3>Step 5: Protect Your Skin</h3>
+
+<p>Sunscreen prevents UV damage and maintains your results.</p>
+
+<p>Matte BroadSpectrum SunDefence provides lightweight daily protection.</p>
+
+<h3>Complete Routine</h3>
+
+<p>Morning: Cleanser, Fade Away, Oil Balancing Hydration, Sunscreen.</p>
+
+<p>Night: Cleanser, Fade Away, optional Renewal Night Cream.</p>
+
+<h3>How Long Before Results</h3>
+
+<p>Within one to two weeks, hydration improves.</p>
+
+<p>Within two to four weeks, skin appears brighter.</p>
+
+<p>Within four to eight weeks, overall tone becomes clearer and more even.</p>
+
+<h3>Common Mistakes to Avoid</h3>
+
+<p>Over-exfoliating damages the skin barrier.</p>
+<p>Ignoring hydration reduces skin radiance.</p>
+<p>Skipping sunscreen reverses progress.</p>
+<p>Expecting immediate results leads to inconsistency.</p>
+
+<h3>Final Thoughts</h3>
+
+<p>Dull skin is usually a sign of imbalance rather than a lack of products.</p>
+
+<p>With the right routine focused on renewal, hydration, and protection, your skin can gradually regain its natural glow.</p>
+
+<div style="margin-top:2rem;">
+  <a href="products.html" class="btn btn-primary">Shop Recommended Product</a>
+</div>
+
+<div style="margin-top:1rem;">
+  <a href="https://wa.me/601127827176" class="btn">Get Personalised Advice</a>
+</div>
+
+<p style="margin-top:2rem;">Pearls & Dews — Clinical, minimal, effective skincare.</p>
+</div>
+
+<div id="a10" class="hidden">
+<h3>Under Eye Dark Circles & Wrinkles: What Actually Works?</h3>
+
+<p>The under-eye area is one of the first places to show signs of fatigue and aging. Dark circles, fine lines, and puffiness can make you look tired even when you are well-rested.</p>
+
+<p>This concern is common in Malaysia, Singapore, and tropical climates where lifestyle factors, dehydration, and environmental stress affect skin quality.</p>
+
+<p>The under-eye area requires a targeted approach, as it is thinner and more delicate than the rest of the face.</p>
+
+<h3>Why the Eye Area Is More Sensitive</h3>
+
+<p>The skin around the eyes is thinner, produces less oil, and is more prone to dehydration.</p>
+
+<p>This makes it more vulnerable to fine lines, pigmentation, and visible blood vessels.</p>
+
+<h3>Types of Dark Circles</h3>
+
+<p>Pigmented dark circles appear brown and are caused by sun exposure or post-inflammatory pigmentation.</p>
+
+<p>Vascular dark circles appear blue or purple due to visible blood vessels under thin skin.</p>
+
+<p>Structural dark circles are caused by volume loss and appear as shadows.</p>
+
+<p>Puffiness is caused by fluid retention, poor circulation, or lack of sleep.</p>
+
+<h3>Why Most Eye Products Do Not Work</h3>
+
+<p>Many products only provide hydration without addressing the root causes.</p>
+
+<p>Effective treatment must target pigmentation, circulation, collagen production, and hydration together.</p>
+
+<h3>The Correct Approach</h3>
+
+<p>Improving under-eye concerns requires consistent and targeted care.</p>
+
+<h3>Step 1: Cleanse Gently</h3>
+
+<p>Avoid harsh rubbing around the eye area.</p>
+
+<p>Gentle Purifying Cleanser helps maintain skin balance without causing irritation.</p>
+
+<h3>Step 2: Use Targeted Eye Treatment</h3>
+
+<p>This is the most important step.</p>
+
+<p>Eye Perfecting Serum helps reduce dark circles, smooth fine lines, and minimise puffiness.</p>
+
+<p>Key ingredients such as Matrixyl support collagen production, Haloxyl targets dark circles, and Caffeine improves circulation.</p>
+
+<h3>Step 3: Maintain Hydration</h3>
+
+<p>Hydrated skin appears smoother and reduces the visibility of fine lines.</p>
+
+<p>Light hydration supports the delicate eye area without causing heaviness.</p>
+
+<h3>Step 4: Protect Your Skin</h3>
+
+<p>UV exposure worsens pigmentation and accelerates wrinkles.</p>
+
+<p>Matte BroadSpectrum SunDefence helps protect the eye area when applied carefully.</p>
+
+<h3>How to Apply Eye Products</h3>
+
+<p>Use a small amount and apply gently using your ring finger.</p>
+
+<p>Tap lightly instead of rubbing to avoid damaging the delicate skin.</p>
+
+<h3>How Long Before Results</h3>
+
+<p>Within two to four weeks, hydration improves.</p>
+
+<p>Within four to eight weeks, dark circles and puffiness may reduce.</p>
+
+<p>Within eight to twelve weeks, fine lines appear smoother.</p>
+
+<h3>Can Dark Circles Be Fully Removed</h3>
+
+<p>Results depend on the cause. Pigmented circles can improve significantly, while vascular and structural concerns can be reduced but may not disappear completely.</p>
+
+<p>Consistent care improves overall appearance.</p>
+
+<h3>Common Mistakes to Avoid</h3>
+
+<p>Using strong face products around the eyes.</p>
+<p>Applying too much product.</p>
+<p>Rubbing the eye area.</p>
+<p>Expecting immediate results.</p>
+
+<h3>Lifestyle Factors</h3>
+
+<p>Lack of sleep, dehydration, and stress can worsen under-eye concerns.</p>
+
+<p>Healthy habits support better results.</p>
+
+<h3>Final Thoughts</h3>
+
+<p>The under-eye area requires targeted care and consistency.</p>
+
+<p>With the right routine, you can reduce dark circles, smooth fine lines, and improve overall eye appearance.</p>
+
+<div style="margin-top:2rem;">
+  <a href="products.html" class="btn btn-primary">Shop Recommended Product</a>
+</div>
+
+<div style="margin-top:1rem;">
+  <a href="https://wa.me/601127827176" class="btn">Get Personalised Advice</a>
+</div>
+
+<p style="margin-top:2rem;">Pearls & Dews — Clinical, minimal, effective skincare.</p>
+</div>
+
+<!-- footer -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="logo.png" alt="Pearls & Dews">
+        </div>
+        <p style="margin:1rem 0; color:#ccc;">Doctor‑formulated, science‑backed, minimal skincare.</p>
+      </div>
+      <div class="footer-links">
+        <p style="font-weight:600; color:#fff;">Navigation</p>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="concerns.html">Concerns</a>
+        <a href="products.html">Products</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-links">
+        <p style="font-weight:600; color:#fff;">Contact</p>
+        <a href="https://wa.me/601127827176">WhatsApp</a>
+        <a href="#">info@pearlsanddews.com</a>
+      </div>
+      <div>
+        <p style="font-weight:600; color:#fff;">Follow us</p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/pearlsdews/"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@pearls.dews/"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.facebook.com/share/17urKNCoGm/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.linkedin.com/company/pearls-dews/"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <p style="margin-top:1rem; color:#ccc;">+60 11-2782 7176</p>
+      </div>
+    </div>
+    <div class="copyright">
+      © Pearls & Dews — luxury dermatological skincare. All rights reserved.
+    </div>
+  </footer>
+
+<script>
+
+/* ===== MOBILE NAV ===== */
+const menuToggle=document.getElementById('menuToggle');
+const navLinks=document.getElementById('navLinks');
+if(menuToggle){
+menuToggle.addEventListener('click',()=>navLinks.classList.toggle('show'));
+const dropdown = document.getElementById('dropdown');
+const dropdownToggle = document.getElementById('dropdownToggle');
+
+if (dropdownToggle && dropdown) {
+  dropdownToggle.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      dropdown.classList.toggle('active');
+    }
+  });
+}
+}
+
+function openModal(id){
+document.getElementById("modal").style.display="flex";
+document.getElementById("modal-body").innerHTML =
+document.getElementById(id).innerHTML;
+}
+function closeModal(){
+document.getElementById("modal").style.display="none";
+}
+</script>
+
+<!-- FAQ -->
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"FAQPage",
+"mainEntity":[
+{"@type":"Question","name":"How to fade acne marks fast?","acceptedAnswer":{"@type":"Answer","text":"Use vitamin C and sunscreen."}},
+{"@type":"Question","name":"Why skin looks dull?","acceptedAnswer":{"@type":"Answer","text":"Dead skin buildup and dehydration."}}
+]
+}
+</script>
+
+</body>
+</html>
