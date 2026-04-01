@@ -913,156 +913,25 @@ footer a{color:#ccc;text-decoration:none;}
   </footer>
 
  <script>
-  // Product data
-  const products = [
-    { name: "Oil Clarifying Cleanser", size: "100ml", price: 90, concerns: ["acne-control", "oiliness"] },
-    { name: "Oil Balancing Hydration", size: "50ml", price: 135, concerns: ["acne-control", "oiliness", "dryness"] },
-    { name: "Fade Away", size: "30ml", price: 170, concerns: ["uneven-tone", "acne-control"] },
-    { name: "Matte BroadSpectrum SunDefence", size: "50ml", price: 130, concerns: ["uneven-tone", "acne-control", "oiliness"] },
-    { name: "Gentle Purifying Cleanser", size: "100ml", price: 95, concerns: ["acne-control", "oiliness"] },
-    { name: "Uplifting Replenishing Cream", size: "30g", price: 120, concerns: ["fine-lines", "dryness"] },
-    { name: "Renewal Night Cream", size: "30g", price: 180, concerns: ["uneven-tone", "fine-lines", "dryness"] },
-    { name: "Wrinkle Relaxer", size: "30ml", price: 185, concerns: ["fine-lines"] },
-    { name: "Rescue Recovery Cream", size: "15g", price: 105, concerns: ["dryness"] },
-    { name: "Eye Perfecting Serum", size: "15g", price: 190, concerns: ["uneven-tone", "fine-lines", "dryness"] }
-  ];
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+const dropdown = document.getElementById('dropdown');
+const dropdownToggle = document.getElementById('dropdownToggle');
 
-  // Image mapping
-  function getProductImage(name) {
-    const imageMap = {
-      "Wrinkle Relaxer": "1.jpg",
-      "Rescue Recovery Cream": "2.jpg",
-      "Renewal Night Cream": "3.jpg",
-      "Oil Clarifying Cleanser": "4.jpg",
-      "Matte BroadSpectrum SunDefence": "5.jpg",
-      "Gentle Purifying Cleanser": "6.jpg",
-      "Fade Away": "7.jpg",
-      "Eye Perfecting Serum": "8.jpg",
-      "Oil Balancing Hydration": "9.jpg",
-      "Uplifting Replenishing Cream": "10.jpg"
-    };
-    return imageMap[name] || "placeholder.jpg";
-  }
-
-  // Concern mapping
-  const concernMap = {
-    "uneven-tone": ["Fade Away", "Renewal Night Cream", "Eye Perfecting Serum", "Matte BroadSpectrum SunDefence"],
-    "acne-control": ["Oil Clarifying Cleanser", "Gentle Purifying Cleanser", "Oil Balancing Hydration", "Fade Away", "Matte BroadSpectrum SunDefence"],
-    "oiliness": ["Oil Clarifying Cleanser", "Oil Balancing Hydration", "Gentle Purifying Cleanser", "Matte BroadSpectrum SunDefence"],
-    "fine-lines": ["Wrinkle Relaxer", "Renewal Night Cream", "Eye Perfecting Serum", "Uplifting Replenishing Cream"],
-    "dryness": ["Oil Balancing Hydration", "Uplifting Replenishing Cream", "Renewal Night Cream", "Rescue Recovery Cream", "Eye Perfecting Serum"]
-  };
-
-  const track = document.getElementById('carouselTrack');
-  const concernCards = document.querySelectorAll('.concern-card');
-  let currentConcern = 'all';
-
-  function renderProducts(concern) {
-    track.innerHTML = '';
-    
-    let filteredProducts = [];
-    if (concern === 'all') {
-      filteredProducts = products;
-    } else {
-      const productNames = concernMap[concern] || [];
-      filteredProducts = products.filter(p => productNames.includes(p.name));
-    }
-    
-    filteredProducts.forEach(p => {
-      const item = document.createElement('div');
-      item.className = 'carousel-item';
-      item.innerHTML = `
-        <div class="carousel-img">
-          <img src="${getProductImage(p.name)}" alt="${p.name}" style="max-width:100%; max-height:100%; object-fit:contain;">
-        </div>
-        <div class="carousel-name">${p.name}</div>
-        <div class="carousel-meta">${p.size} — RM ${p.price}</div>
-        <div class="carousel-price">RM ${p.price}</div>
-        <div class="carousel-buttons">
-          <a href="https://wa.me/601127827176?text=Hello%2C%20I%20would%20like%20to%20purchase%20${encodeURIComponent(p.name)}%20from%20Pearls%20%26%20Dews." target="_blank" class="btn-carousel btn-carousel-wa"><i class="fab fa-whatsapp"></i></a>
-          <a href="https://shopee.com/search?keyword=Pearls%20%26%20Dews%20${encodeURIComponent(p.name)}" target="_blank" class="btn-carousel btn-carousel-shopee"><i class="fas fa-shopping-bag"></i></a>
-        </div>
-      `;
-      track.appendChild(item);
-    });
-
-    currentIndex = 0;
-    updateCarousel();
-  }
-
-  concernCards.forEach(card => {
-    card.addEventListener('click', () => {
-      concernCards.forEach(c => c.classList.remove('active'));
-      card.classList.add('active');
-      currentConcern = card.dataset.concern;
-      renderProducts(currentConcern);
-    });
-  });
-
-  // Carousel navigation
-  let currentIndex = 0;
-
-  function updateCarousel() {
-    const itemWidth = 300;
-    const maxIndex = Math.max(0, track.children.length - 1);
-    if (currentIndex > maxIndex) currentIndex = maxIndex;
-    track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-  }
-
-  document.getElementById('carouselPrev').addEventListener('click', () => {
-    if (currentIndex > 0) currentIndex--;
-    updateCarousel();
-  });
-
-  document.getElementById('carouselNext').addEventListener('click', () => {
-    if (currentIndex < track.children.length - 1) currentIndex++;
-    updateCarousel();
-  });
-
-  // Mobile menu
-  const menuToggle = document.getElementById('menuToggle');
-  const navLinks = document.getElementById('navLinks');
-  const dropdown = document.getElementById('dropdown');
-  const dropdownToggle = document.getElementById('dropdownToggle');
-
+if (menuToggle && navLinks) {
   menuToggle.addEventListener('click', () => {
     navLinks.classList.toggle('show');
   });
+}
 
+if (dropdownToggle && dropdown) {
   dropdownToggle.addEventListener('click', (e) => {
     if (window.innerWidth <= 768) {
       e.preventDefault();
       dropdown.classList.toggle('active');
     }
   });
-
-  document.querySelectorAll('.nav-links a:not(.dropdown-toggle)').forEach(link => {
-    link.addEventListener('click', () => {
-      navLinks.classList.remove('show');
-      dropdown.classList.remove('active');
-    });
-  });
-
-  // Modal
-  const modal = document.getElementById('promoModal');
-  const closeBtn = document.getElementById('closeModal');
-
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      modal.classList.add('show');
-    }, 2000);
-  });
-
-  closeBtn.addEventListener('click', () => {
-    modal.classList.remove('show');
-  });
-
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('show');
-  });
-
-  // Initial render
-  renderProducts('all');
+}
 </script>
 </body>
 </html>
