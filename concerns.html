@@ -32,6 +32,12 @@ grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 gap:2rem;
 padding:3rem;
 }
+
+@media (max-width:768px){
+  .blog-grid{
+    padding:1.5rem;
+  }
+}
 .blog-card{
 border:1px solid #eee;
 cursor:pointer;
@@ -58,11 +64,12 @@ z-index:999;
 }
 .modal-content{
 background:#fff;
-width:90%;
+width:95%;
 max-width:900px;
 height:90%;
 overflow:auto;
-padding:2rem;
+padding:1.5rem;
+box-sizing:border-box;
 }
 .close{float:right;font-size:1.5rem;cursor:pointer;}
 
@@ -690,6 +697,16 @@ gap:2rem;
 border:1px solid #eee;
 padding:2rem;
 text-align:center;
+}
+
+img{
+  max-width:100%;
+  height:auto;
+  display:block;
+}
+
+html, body{
+  overflow-x:hidden;
 }
 
 </style>
