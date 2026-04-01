@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products | Pearls & Dews</title>
+
+<link rel="icon" type="image/png" href="fav.png">
+
+<!-- SAME FONTS -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+
+/* ---------- PALETTE: 70% white, 20% black, 10% deep charcoal ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: #FFFFFF;
+      color: #111111;
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: #111111;
+    }
+    h1 {
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 1.1;
+    }
+    h2 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+    h3 {
+      font-size: 1.8rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+    .section-subhead {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #231F20;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+    @media (max-width: 768px) {
+      .container { padding: 0 1.5rem; }
+    }
+    .section {
+      padding: 2rem 0;
+    }
+    .section-sm {
+      padding: 2rem 0;
+    }
+
+    /* buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.9rem 2.8rem;
+      text-decoration: none;
+      font-weight: 400;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      border: 1px solid #111111;
+      font-size: 0.85rem;
+      background: transparent;
+      color: #111111;
+      font-family: 'Inter', sans-serif;
+      text-transform: uppercase;
+    }
+    .btn-primary {
+      background: #111111;
+      color: #FFFFFF;
+      border-color: #111111;
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: #111111;
+    }
+    .btn-accent {
+      background: #231F20;
+      border-color: #231F20;
+      color: #FFFFFF;
+    }
+    .btn-accent:hover {
+      background: transparent;
+      color: #111111;
+      border-color: #111111;
+    }
+
+    /* top bar */
+    .top-bar {
+      background: #111111;
+      color: #FFFFFF;
+      text-align: center;
+      padding: 0.6rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+
+    /* navigation with dropdown */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      padding: 0.3rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .nav-logo img {
+      height: 44px;
+      width: auto;
+      filter: grayscale(100%) contrast(1.2);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+    .nav-links > li {
+      list-style: none;
+      position: relative;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #111111;
+      font-weight: 400;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      display: block;
+    }
+    .nav-links a:hover {
+      color: #674d34;
+    }
+    /* dropdown */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #FFFFFF;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+      border: 1px solid #eee;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s;
+      z-index: 10;
+      padding: 0.5rem 0;
+    }
+    .dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+    }
+    .dropdown-menu a {
+      padding: 0.7rem 1.5rem;
+      text-transform: none;
+      font-size: 0.85rem;
+    }
+    .menu-icon {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      z-index: 200;
+    }
+    /* mobile menu overlay */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 320px;
+        height: 100vh;
+        background: #FFFFFF;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 2rem;
+        gap: 1.5rem;
+        transition: right 0.4s ease;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        z-index: 150;
+        display: flex;
+      }
+      .nav-links.show {
+        right: 0;
+      }
+      .nav-links > li {
+        width: 100%;
+      }
+      .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        border: none;
+        opacity: 1;
+        visibility: visible;
+        padding-left: 1rem;
+        display: none;
+        margin-top: 0.5rem;
+      }
+      .dropdown.active .dropdown-menu {
+        display: block;
+      }
+      .dropdown .dropdown-toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+      .menu-icon {
+        display: block;
+      }
+    }
+
+    /* thin wording slideshow banners */
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: #f5f5f5;
+      padding: 0.8rem 0;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+    }
+    .ticker {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+      animation: ticker 30s linear infinite;
+    }
+    .ticker-item {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #231F20;
+      font-weight: 400;
+    }
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* hero with GIF background */
+    .hero {
+      height: 90vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('background.gif') center/cover no-repeat;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255,255,255,0.7);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+      margin-left: 10%;
+      color: #111111;
+    }
+    .hero h1 {
+      font-size: clamp(4rem, 10vw, 7rem);
+      line-height: 0.9;
+      margin-bottom: 1.5rem;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      margin: 1.5rem 0 2.5rem;
+      color: #333;
+      max-width: 450px;
+    }
+
+    /* concerns grid */
+    .concern-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .concern-card {
+      background: #f5f5f5;
+      padding: 2rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: 0.2s;
+    }
+    .concern-card.active {
+      border-color: #231F20;
+      background: #fff;
+    }
+    .concern-card i {
+      font-size: 2rem;
+      color: #231F20;
+      margin-bottom: 0.5rem;
+    }
+    .concern-card span {
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+    }
+
+    /* product carousel */
+    .carousel-container {
+      position: relative;
+    }
+    .carousel-wrapper {
+      overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      gap: 2rem;
+      transition: transform 0.4s ease;
+    }
+    .carousel-item {
+      flex: 0 0 280px;
+      background: #fff;
+      border: 1px solid #ffffff;
+      padding: 1.5rem;
+    }
+    .carousel-img {
+      background: #ffffff;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      filter: grayscale(100%);
+    }
+    .carousel-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+    }
+    .carousel-price {
+      font-size: 1.2rem;
+      color: #231F20;
+      margin: 0.5rem 0;
+    }
+    .carousel-buttons {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-carousel {
+      flex: 1;
+      padding: 0.3rem;
+      text-align: center;
+      text-decoration: none;
+      border: 1px solid #111;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+    .btn-carousel-wa {
+      background: #111;
+      color: #fff;
+    }
+    .btn-carousel-shopee {
+      background: transparent;
+      color: #111;
+    }
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .carousel-nav button {
+      width: 48px;
+      height: 48px;
+      border: 1px solid #111;
+      background: #fff;
+      cursor: pointer;
+    }
+    .carousel-img {
+  overflow: hidden; /* important so zoom stays inside box */
+}
+
+.carousel-img img {
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.carousel-img:hover img {
+  transform: scale(1.5); /* zoom amount */
+}
+
+    /* featured product */
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      background: #fafafa;
+      padding: 3rem;
+      align-items: center;
+    }
+    .featured-img {
+      background: #fafafa;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* testimonials */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+    }
+    .testimonial-card {
+      background: #fafafa;
+      padding: 2rem;
+    }
+    .stars {
+      color: #231F20;
+      margin: 1rem 0;
+    }
+
+    /* newsletter */
+    .newsletter {
+      background: #f5f5f5;
+      padding: 4rem;
+      text-align: center;
+    }
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 2rem auto 0;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-right: none;
+    }
+    .newsletter-form button {
+      padding: 1rem 2rem;
+      background: #111;
+      color: #fff;
+      border: 1px solid #111;
+      cursor: pointer;
+    }
+
+    /* footer */
+    footer {
+      background: #111111;
+      color: #f5f5f5;
+      padding: 4rem 3rem 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 3rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .footer-logo img {
+      height: 44px;
+      filter: grayscale(100%) brightness(10);
+    }
+    .footer-links a {
+      display: block;
+      color: #ccc;
+      text-decoration: none;
+      margin: 0.5rem 0;
+    }
+    .footer-links a:hover {
+      color: #fff;
+    }
+    .social-links {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+    .social-links a {
+      color: #ccc;
+      font-size: 1.4rem;
+      transition: color 0.2s;
+    }
+    .social-links a:hover {
+      color: #2e2c2c;
+    }
+    .copyright {
+      text-align: center;
+      margin-top: 3rem;
+      color: #888;
+      font-size: 0.8rem;
+    }
+
+    /* floating whatsapp */
+    .floating-wa {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #111;
+      color: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 99;
+      transition: 0.2s;
+      text-decoration: none;
+    }
+    .floating-wa:hover {
+      background: #231F20;
+    }
+
+    /* modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+    }
+    .modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-content {
+      background: #fff;
+      max-width: 440px;
+      width: 90%;
+      padding: 2rem;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1.5rem;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+    .promo-placeholder {
+      background: #f5f5f5;
+      height: 140px;
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (max-width: 768px) {
+      .featured-card { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+/* ===== KEEP YOUR STYLE SYSTEM ===== */
+body{font-family:'Inter',sans-serif;background:#fff;color:#111;margin:0;}
+h1,h2,h3{font-family:'Playfair Display',serif;}
+
+.container{max-width:1280px;margin:auto;padding:0 2rem;}
+.section{padding:4rem 0;}
+.section-subhead{letter-spacing:4px;font-size:0.8rem;text-transform:uppercase;color:#231F20;}
+
+/* ===== PREMIUM PRODUCT GRID ===== */
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:2.5rem;
+  margin-top:3rem;
+}
+
+.product-card{
+  border:1px solid #eee;
+  padding:2rem;
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  transition:0.35s ease;
+}
+
+.product-card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 20px 40px rgba(0,0,0,0.06);
+}
+
+.product-img{
+  height:220px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:1.5rem;
+}
+
+.product-img img{
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+}
+
+/* typography hierarchy */
+.product-name{
+  font-size:1.5rem;
+  margin-bottom:0.3rem;
+}
+
+.product-tag{
+  font-size:0.75rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#666;
+  margin-bottom:0.8rem;
+}
+
+.product-price{
+  font-size:1.2rem;
+  font-weight:500;
+  margin:0.5rem 0 1rem;
+}
+
+.product-desc{
+  font-size:0.95rem;
+  color:#444;
+  line-height:1.5;
+}
+
+.product-meta{
+  margin-top:1rem;
+  font-size:0.85rem;
+  color:#666;
+  line-height:1.6;
+  border-top:1px solid #eee;
+  padding-top:1rem;
+}
+
+.best{
+  border:2px solid #111;
+}
+
+.btn{
+display:inline-block;
+padding:0.6rem 1.6rem;
+border:1px solid #111;
+text-decoration:none;
+font-size:0.8rem;
+margin-top:1rem;
+}
+
+.btn-accent{
+background:#111;color:#fff;
+}
+
+/* ===== MODAL ===== */
+.modal{
+position:fixed;
+top:0;left:0;width:100%;height:100%;
+background:rgba(0,0,0,0.5);
+display:flex;
+justify-content:center;
+align-items:center;
+opacity:0;visibility:hidden;
+transition:0.3s;
+z-index:999;
+}
+
+.modal.show{
+opacity:1;visibility:visible;
+}
+
+.modal-box{
+background:#fff;
+padding:2rem;
+max-width:500px;
+width:90%;
+}
+
+.modal-close{
+float:right;
+cursor:pointer;
+font-size:1.5rem;
+}
+
+/* ===== ROUTINE ===== */
+.routine{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:2rem;
+}
+
+.routine-box{
+border:1px solid #eee;
+padding:2rem;
+text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+ <!-- top bar -->
+  <div class="top-bar">
+    Complimentary shipping on orders RM500+ | Join Pearls & Dews Rewards
+  </div>
+
+  <!-- floating whatsapp -->
+  <a href="https://wa.me/601127827176?text=Hello%2C%20I'm%20interested%20in%20Pearls%20%26%20Dews" class="floating-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+ <!-- modal -->
+<div class="modal-overlay" id="promoModal">
+  <div class="modal-content">
+    <span class="modal-close" id="closeModal">&times;</span>
+    <h3>Special offer</h3>
+    <p class="section-subhead">Grab Now!</p>
+    <div class="promo-placeholder">
+      <img src="promo.jpg" alt="October promo" style="width:100%; height:100%; object-fit:cover;">
+    </div>
+    <p>Use code <strong>PEARLOCT</strong> on WhatsApp or Shopee.</p>
+    <a href="https://wa.me/601127827176?text=Hello%2C%20I'm%20interested%20in%20the%20October%20promo" class="btn btn-accent" style="margin-top:1rem; width:100%;">Claim now</a>
+  </div>
+</div>
+
+  <!-- navigation -->
+  <nav>
+    <div class="nav-logo">
+      <img src="logo.png" alt="Pearls & Dews">
+    </div>
+    <div class="menu-icon" id="menuToggle"><i class="fas fa-bars"></i></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li class="dropdown" id="dropdown">
+        <a href="#" class="dropdown-toggle" id="dropdownToggle">Discover</i></a>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="about.html">About</a>
+          <a href="careers.html">Careers</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </li>
+      <li><a href="concerns.html">Concerns</a></li>
+      <li><a href="products.html">Products</a></li>
+    </ul>
+  </nav>
+
+<!-- ===== HERO ===== -->
+<section class="section" style="text-align:center;">
+<div class="container">
+<span class="section-subhead">collection</span>
+<h1>Clinical Skincare</h1>
+<p style="max-width:600px;margin:auto;">
+Precision formulations designed to restore skin function and deliver visible results.
+</p>
+</div>
+</section>
+
+<!-- thin wording slideshow banners -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ticker-item">doctor‑formulated</span>
+      <span class="ticker-item">science‑backed</span>
+      <span class="ticker-item">minimalist skincare</span>
+      <span class="ticker-item">skin barrier focused</span>
+      <span class="ticker-item">clinical elegance</span>
+      <span class="ticker-item">doctor‑formulated</span>
+      <span class="ticker-item">science‑backed</span>
+      <span class="ticker-item">minimalist skincare</span>
+      <span class="ticker-item">skin barrier focused</span>
+      <span class="ticker-item">clinical elegance</span>
+    </div>
+  </div>
+
+
+<!-- ===== BEST SELLER ===== -->
+<section class="section" style="background:#fafafa;">
+<div class="container">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;">
+<img src="7.jpg" style="width:100%;object-fit:contain;">
+<div>
+<span class="section-subhead">best seller</span>
+<h2>Fade Away</h2>
+<p>Targets pigmentation, acne marks and uneven tone while improving firmness.</p>
+<a href="https://wa.me/601127827176?text=I%20want%20Fade%20Away" class="btn btn-accent">Buy Now</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===== PRODUCTS GRID ===== -->
+<section class="section">
+<div class="container">
+<div class="product-grid">
+
+<!-- PRODUCT TEMPLATE -->
+<div class="product-card best">
+  <div class="product-img"><img src="7.jpg"></div>
+
+  <span class="product-tag">Best Seller • Pigmentation</span>
+  <h3 class="product-name">Fade Away</h3>
+  <div class="product-price">RM 170</div>
+
+  <p class="product-desc">
+    High-potency antioxidant treatment that reduces pigmentation, acne marks and uneven tone while improving skin firmness.
+  </p>
+
+  <div class="product-meta">
+    <strong>Skin type:</strong> All skin types (ideal for pigmented & aging skin)<br>
+    <strong>Key actives:</strong> Vitamin C (SAP 5%), Niacinamide 4%, Hyaluronic Acid, Lactic Acid<br>
+    <strong>Use:</strong> Apply twice daily. Always pair with sunscreen.
+  </div>
+
+  <a href="https://wa.me/601127827176?text=I%20want%20Fade%20Away" class="btn btn-accent">Buy Now</a>
+</div>
+
+<div class="product-card">
+  <div class="product-img"><img src="4.jpg"></div>
+
+  <span class="product-tag">Acne • Oil Control</span>
+  <h3 class="product-name">Oil Clarifying Cleanser</h3>
+  <div class="product-price">RM 90</div>
+
+  <p class="product-desc">
+    Deep purifying cleanser with AHA, BHA and enzymes to unclog pores and reduce acne formation.
+  </p>
+
+  <div class="product-meta">
+    <strong>Skin type:</strong> Oily & acne-prone<br>
+    <strong>Key actives:</strong> Glycolic Acid, Salicylic Acid, Lactic Acid, Papain, Bromelain<br>
+    <strong>Use:</strong> Massage, rinse thoroughly. Use twice daily.
+  </div>
+
+  <a href="https://wa.me/601127827176?text=I%20want%20Oil%20Clarifying%20Cleanser" class="btn">Buy Now</a>
+</div>
+
+<div class="product-card">
+  <div class="product-img"><img src="6.jpg"></div>
+
+  <span class="product-tag">Sensitive • Hydrating</span>
+  <h3 class="product-name">Gentle Purifying Cleanser</h3>
+  <div class="product-price">RM 95</div>
+
+  <p class="product-desc">
+    Moisture cleansing lotion that removes impurities while soothing and maintaining hydration.
+  </p>
+
+  <div class="product-meta">
+    <strong>Skin type:</strong> All skin types<br>
+    <strong>Key actives:</strong> Witch Hazel, Licorice, Chamomile, Glycerin<br>
+    <strong>Use:</strong> Massage onto wet skin and rinse.
+  </div>
+
+  <a href="https://wa.me/601127827176?text=I%20want%20Gentle%20Cleanser" class="btn">Buy Now</a>
+</div>
+
+<div class="product-card">
+  <div class="product-img"><img src="9.jpg"></div>
+
+  <span class="product-tag">Barrier • Calming</span>
+  <h3 class="product-name">Oil Balancing Hydration</h3>
+  <div class="product-price">RM 135</div>
+
+  <p class="product-desc">
+    Lightweight serum that relieves redness, irritation and regulates oil production.
+  </p>
+
+  <div class="product-meta">
+    <strong>Skin type:</strong> All skin types<br>
+    <strong>Key actives:</strong> Niacinamide 5%, Marine Ferment, Licorice, Bisabolol<br>
+    <strong>Use:</strong> Apply twice daily.
+  </div>
+
+  <a href="https://wa.me/601127827176?text=I%20want%20Oil%20Balancing%20Hydration" class="btn">Buy Now</a>
+</div>
+
+<div class="product-card">
+  <div class="product-img"><img src="5.jpg"></div>
+
+  <span class="product-tag">UV Protection</span>
+  <h3 class="product-name">Matte BroadSpectrum SunDefence</h3>
+  <div class="product-price">RM 130</div>
+
+  <p class="product-desc">
+    Ultra-light sunscreen with UVA/UVB and blue light protection.
+  </p>
+
+  <div class="product-meta">
+    <strong>Skin type:</strong> All skin types<br>
+    <strong>Key actives:</strong> Titanium Dioxide, Niacinamide, Vitamin E<br>
+    <strong>Use:</strong> Apply before sun exposure.
+  </div>
+
+  <a href="https://wa.me/601127827176?text=I%20want%20SunDefence" class="btn">Buy Now</a>
+</div>
+
+<div class="product-card">
+  <div class="product-img"><img src="3.jpg"></div>
+
+  <span class="product-tag">Anti-Aging • Renewal</span>
+  <h3 class="product-name">Renewal Night Cream</h3>
+  <div class="product-price">RM 180</div>
+
+  <p class="product-desc">
+    Encapsulated retinol treatment that improves skin texture, reduces wrinkles and enhances regeneration.
+  </p>
+
+  <div class="product-meta">
+    <strong>Skin type:</strong> All skin types<br>
+    <strong>Key actives:</strong> Retinol (encapsulated), Retinyl Palmitate, Vitamin C, Licorice Extract<br>
+    <strong>Use:</strong> Apply at night. Use sunscreen during the day.
+  </div>
+
+  <a href="https://wa.me/601127827176?text=I%20want%20Renewal%20Night%20Cream" class="btn">Buy Now</a>
+</div>
+
+<div class="product-card">
+  <div class="product-img"><img src="1.jpg"></div>
+
+  <span class="product-tag">Anti-Wrinkle • Peptides</span>
+  <h3 class="product-name">Wrinkle Relaxer</h3>
+  <div class="product-price">RM 185</div>
+
+  <p class="product-desc">
+    Multi-peptide treatment that reduces expression lines and improves skin firmness and elasticity.
+  </p>
+
+  <div class="product-meta">
+    <strong>Skin type:</strong> All skin types<br>
+    <strong>Key actives:</strong> Argireline, Acetyl Hexapeptide, Pentapeptide-18, Hyaluronic Acid<br>
+    <strong>Use:</strong> Apply evenly on face, neck and eye area twice daily.
+  </div>
+
+  <a href="https://wa.me/601127827176?text=I%20want%20Wrinkle%20Relaxer" class="btn">Buy Now</a>
+</div>
+
+<div class="product-card">
+  <div class="product-img"><img src="2.jpg"></div>
+
+  <span class="product-tag">Repair • Recovery</span>
+  <h3 class="product-name">Rescue Recovery Cream</h3>
+  <div class="product-price">RM 105</div>
+
+  <p class="product-desc">
+    Barrier-repair cream that reduces redness, promotes healing and restores skin after treatments.
+  </p>
+
+  <div class="product-meta">
+    <strong>Skin type:</strong> All skin types<br>
+    <strong>Key actives:</strong> Centella Asiatica, Arnica, Vitamin B5, Squalane, Sodium Hyaluronate<br>
+    <strong>Use:</strong> Apply twice daily or when skin feels dry.
+  </div>
+
+  <a href="https://wa.me/601127827176?text=I%20want%20Rescue%20Recovery%20Cream" class="btn">Buy Now</a>
+</div>
+
+<div class="product-card">
+  <div class="product-img"><img src="8.jpg"></div>
+
+  <span class="product-tag">Eye Care • Anti-Aging</span>
+  <h3 class="product-name">Eye Perfecting Serum</h3>
+  <div class="product-price">RM 190</div>
+
+  <p class="product-desc">
+    Advanced peptide formulation targeting wrinkles, puffiness and dark circles around the eyes.
+  </p>
+
+  <div class="product-meta">
+    <strong>Skin type:</strong> All skin types<br>
+    <strong>Key actives:</strong> Matrixyl, Haloxyl, Eyeliss, Caffeine, Hyaluronic Acid<br>
+    <strong>Use:</strong> Apply around eye contour. Avoid direct eye contact.
+  </div>
+
+  <a href="https://wa.me/601127827176?text=I%20want%20Eye%20Perfecting%20Serum" class="btn">Buy Now</a>
+</div>
+
+<div class="product-card">
+  <div class="product-img"><img src="10.jpg"></div>
+
+  <span class="product-tag">Firming • Age Defense</span>
+  <h3 class="product-name">Uplifting Replenishing Cream</h3>
+  <div class="product-price">RM 120</div>
+
+  <p class="product-desc">
+    Multi-functional age-defense cream that improves elasticity, firmness and overall skin vitality.
+  </p>
+
+  <div class="product-meta">
+    <strong>Skin type:</strong> Dry, dehydrated & mature skin<br>
+    <strong>Key actives:</strong> Resveratrol, Vitamin E, Peptides, Baicalin, Caffeine<br>
+    <strong>Use:</strong> Apply on face and neck twice daily.
+  </div>
+
+  <a href="https://wa.me/601127827176?text=I%20want%20Uplifting%20Cream" class="btn">Buy Now</a>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- ===== ROUTINE SECTION ===== -->
+<section class="section" style="background:#fafafa;">
+<div class="container">
+<h2>Recommended Routine</h2>
+
+<div class="routine">
+<div class="routine-box">
+<h3>Acne Control</h3>
+<p>Cleanser → Serum → Treatment</p>
+<p>Oil Cleanser + Hydration + Fade Away</p>
+</div>
+
+<div class="routine-box">
+<h3>Anti-Aging</h3>
+<p>Cleanser → Serum → Night Cream</p>
+<p>Gentle Cleanser + Wrinkle Relaxer + Renewal</p>
+</div>
+
+<div class="routine-box">
+<h3>Sensitive Skin</h3>
+<p>Cleanser → Repair → Hydration</p>
+<p>Gentle Cleanser + Rescue Cream + Hydration</p>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- footer -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="logo.png" alt="Pearls & Dews">
+        </div>
+        <p style="margin:1rem 0; color:#ccc;">Doctor‑formulated, science‑backed, minimal skincare.</p>
+      </div>
+      <div class="footer-links">
+        <p style="font-weight:600; color:#fff;">Navigation</p>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#concerns">Concerns</a>
+        <a href="#products">Products</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-links">
+        <p style="font-weight:600; color:#fff;">Contact</p>
+        <a href="https://wa.me/601127827176">WhatsApp</a>
+        <a href="#">info@pearlsanddews.com</a>
+      </div>
+      <div>
+        <p style="font-weight:600; color:#fff;">Follow us</p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/pearlsdews/"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@pearls.dews/"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.facebook.com/share/17urKNCoGm/?mibextid=wwXIfr"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.linkedin.com/company/pearls-dews/"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <p style="margin-top:1rem; color:#ccc;">+60 11-2782 7176</p>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2025 Pearls & Dews — luxury dermatological skincare. All rights reserved.
+    </div>
+  </footer>
+
+<!-- ===== MODAL ===== -->
+<div class="modal" id="modal">
+<div class="modal-box">
+<span class="modal-close" onclick="closeModal()">×</span>
+<img id="modalImg" style="width:100%;">
+<h3 id="modalTitle"></h3>
+<p id="modalDesc"></p>
+<p id="modalPrice"></p>
+<a id="modalBtn" class="btn btn-accent">Buy Now</a>
+</div>
+</div>
+
+<script>
+
+/* ===== MOBILE NAV ===== */
+const menuToggle=document.getElementById('menuToggle');
+const navLinks=document.getElementById('navLinks');
+if(menuToggle){
+menuToggle.addEventListener('click',()=>navLinks.classList.toggle('show'));
+}
+
+/* ===== MODAL ===== */
+function openModal(title,img,price,desc){
+document.getElementById('modal').classList.add('show');
+document.getElementById('modalTitle').innerText=title;
+document.getElementById('modalImg').src=img;
+document.getElementById('modalDesc').innerText=desc;
+document.getElementById('modalPrice').innerText=price;
+document.getElementById('modalBtn').href=`https://wa.me/601127827176?text=I want ${title}`;
+}
+
+function closeModal(){
+document.getElementById('modal').classList.remove('show');
+}
+
+</script>
+
+</body>
+</html>
