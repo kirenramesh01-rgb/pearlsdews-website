@@ -891,18 +891,78 @@
 
  <script>
   // Product data
-  const products = [
-    { name: "Oil Clarifying Cleanser", size: "100ml", price: 90, concerns: ["acne-control", "oiliness"] },
-    { name: "Oil Balancing Hydration", size: "50ml", price: 135, concerns: ["acne-control", "oiliness", "dryness"] },
-    { name: "Fade Away", size: "30ml", price: 170, concerns: ["uneven-tone", "acne-control"] },
-    { name: "Matte BroadSpectrum SunDefence", size: "50ml", price: 130, concerns: ["uneven-tone", "acne-control", "oiliness"] },
-    { name: "Gentle Purifying Cleanser", size: "100ml", price: 95, concerns: ["acne-control", "oiliness"] },
-    { name: "Uplifting Replenishing Cream", size: "30g", price: 120, concerns: ["fine-lines", "dryness"] },
-    { name: "Renewal Night Cream", size: "30g", price: 180, concerns: ["uneven-tone", "fine-lines", "dryness"] },
-    { name: "Wrinkle Relaxer", size: "30ml", price: 185, concerns: ["fine-lines"] },
-    { name: "Rescue Recovery Cream", size: "15g", price: 105, concerns: ["dryness"] },
-    { name: "Eye Perfecting Serum", size: "15g", price: 190, concerns: ["uneven-tone", "fine-lines", "dryness"] }
-  ];
+ const products = [
+  { 
+    name: "Oil Clarifying Cleanser", 
+    size: "100ml", 
+    price: 90, 
+    stripeLink: "https://shop.pearlsndews.com/b/4gMcN4bDVgyXbjHe1c6Zy04",
+    concerns: ["acne-control", "oiliness"] 
+  },
+  { 
+    name: "Oil Balancing Hydration", 
+    size: "50ml", 
+    price: 135, 
+    stripeLink: "https://shop.pearlsndews.com/b/4gMaEWfUbbeDevTcX86Zy06",
+    concerns: ["acne-control", "oiliness", "dryness"] 
+  },
+  { 
+    name: "Fade Away", 
+    size: "30ml", 
+    price: 170, 
+    stripeLink: "https://shop.pearlsndews.com/b/7sY14m5fx96vafD2iu6Zy02",
+    concerns: ["uneven-tone", "acne-control"] 
+  },
+  { 
+    name: "Matte BroadSpectrum SunDefence", 
+    size: "50ml", 
+    price: 130, 
+    stripeLink: "https://shop.pearlsndews.com/b/00w9AS37pgyXafDg9k6Zy07",
+    concerns: ["uneven-tone", "acne-control", "oiliness"] 
+  },
+  { 
+    name: "Gentle Purifying Cleanser", 
+    size: "100ml", 
+    price: 95, 
+    stripeLink: "https://shop.pearlsndews.com/b/5kQ00igYffuTgE17CO6Zy05",
+    concerns: ["acne-control", "oiliness"] 
+  },
+  { 
+    name: "Uplifting Replenishing Cream", 
+    size: "30g", 
+    price: 120, 
+    stripeLink: "https://shop.pearlsndews.com/b/4gMaEWbDVaazevT8GS6Zy0c",
+    concerns: ["fine-lines", "dryness"] 
+  },
+  { 
+    name: "Renewal Night Cream", 
+    size: "30g", 
+    price: 180, 
+    stripeLink: "https://shop.pearlsndews.com/b/5kQ7sK37pbeDbjH2iu6Zy08",
+    concerns: ["uneven-tone", "fine-lines", "dryness"] 
+  },
+  { 
+    name: "Wrinkle Relaxer", 
+    size: "30ml", 
+    price: 185, 
+    stripeLink: "https://shop.pearlsndews.com/b/eVq6oGgYfgyXfzX5uG6Zy09",
+    concerns: ["fine-lines"] 
+  },
+  { 
+    name: "Rescue Recovery Cream", 
+    size: "15g", 
+    price: 105, 
+    stripeLink: "https://shop.pearlsndews.com/b/9B6aEW23l3Mb87vcX86Zy0a",
+    concerns: ["dryness"] 
+  },
+  { 
+    name: "Eye Perfecting Serum", 
+    size: "15g", 
+    price: 190, 
+    stripeLink: "https://shop.pearlsndews.com/b/8x23cu5fx4Qf3Rf3my6Zy0b",
+    concerns: ["uneven-tone", "fine-lines", "dryness"] 
+  }
+];
 
   // Image mapping
   function getProductImage(name) {
@@ -956,7 +1016,9 @@
         <div class="carousel-meta">${p.size} — RM ${p.price}</div>
         <div class="carousel-price">RM ${p.price}</div>
         <div class="carousel-buttons">
-          <a href="https://wa.me/601127827176?text=Hello%2C%20I%20would%20like%20to%20purchase%20${encodeURIComponent(p.name)}%20from%20Pearls%20%26%20Dews." target="_blank" class="btn-carousel btn-carousel-wa"><i class="fab fa-whatsapp"></i></a>
+          <a href="${p.stripeLink}" target="_blank" rel="noopener noreferrer" class="btn-carousel btn-carousel-wa" aria-label="Order ${p.name}">
+  <i class="fas fa-shopping-cart"></i>
+</a>
           
         </div>
       `;
